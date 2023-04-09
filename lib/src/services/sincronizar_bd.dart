@@ -61,9 +61,7 @@ void sincronizarseccionIIAMongo() async {
 
   if (registros.isNotEmpty) {
     for (final registro in registros) {
-      if (registro != null &&
-          (registro['imagen'] != '') &&
-          (registro['imagenInfrarroja'] != '')) {
+      if ((registro['imagen'] != '') && (registro['imagenInfrarroja'] != '')) {
         final existente =
             await coleccion.findOne({'anexoID': registro['anexoID']});
 
@@ -89,7 +87,7 @@ void sincronizarseccionIIAMongo() async {
           final urlImagen1 = response1.secureUrl;
           final urlImagen2 = response2.secureUrl;
 
-          print('ya obtuve las imagenes url');
+          //print('ya obtuve las imagenes url');
 
           recordsToInsert.add({
             'anexoID': registro['anexoID'],
@@ -138,10 +136,10 @@ void sincronizarseccionIIAMongo() async {
             'trimestre': registro['trimestre'],
             'clienteID': registro['clienteID'],
           });
-          print('Registro nuevo con ID ${registro['anexoID']}');
+          //print('Registro nuevo con ID ${registro['anexoID']}');
         } else {
-          print(
-              'Registro ya existente con ID ${registro['anexoID']}. No se actualiza.');
+          // print(
+          //     'Registro ya existente con ID ${registro['anexoID']}. No se actualiza.');
         }
       }
     }
@@ -150,10 +148,10 @@ void sincronizarseccionIIAMongo() async {
           .map((record) => Map<String, dynamic>.from(record))
           .toList();
       await mongodb.collection('SeccionII').insertMany(mappedRecords);
-      print('Registros insertados en MongoDB: ${recordsToInsert.length}');
+      //print('Registros insertados en MongoDB: ${recordsToInsert.length}');
     }
     await db.delete('anexocinco');
-    print('datos de la BD borrados');
+    //print('datos de la BD borrados');
     await mongodb.close();
   }
 }

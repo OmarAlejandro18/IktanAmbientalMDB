@@ -208,17 +208,17 @@ class NuevoClienteForm extends StatelessWidget {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primary),
             onPressed: () async {
-              print('El clienteID tiene el valor de ${clienteID.text}');
-              print('El clienteID tiene el valor de ${idDespues.text}');
+              //print('El clienteID tiene el valor de ${clienteID.text}');
+              //print('El clienteID tiene el valor de ${idDespues.text}');
 
               if (formKey.currentState!.validate()) {
                 if (clienteID.text != '' && idDespues.text == '') {
                   final String trimestreN = trimestre.text;
-                  print('ya se tiene un registro');
-                  print('id del cliente que ya esta ${clienteID.text}');
-                  print('id del cleinte nuevo es ${idDespues.text}');
-                  print(
-                      'el trimestre cuando ya se tiene registro es $trimestreN');
+                  // print('ya se tiene un registro');
+                  // print('id del cliente que ya esta ${clienteID.text}');
+                  // print('id del cleinte nuevo es ${idDespues.text}');
+                  // print(
+                  //     'el trimestre cuando ya se tiene registro es $trimestreN');
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -232,10 +232,10 @@ class NuevoClienteForm extends StatelessWidget {
                 if (idDespues.text != '' &&
                     (idDespues.text != clienteID.text)) {
                   final String trimestreN = trimestre.text;
-                  print('id del cliente que ya esta ${clienteID.text}');
-                  print('id del cleinte nuevo es ${idDespues.text}');
-                  print('el trimestre cuando el registro es nuevo $trimestreN');
-                  print('registrar nuevo cliente');
+                  // print('id del cliente que ya esta ${clienteID.text}');
+                  // print('id del cleinte nuevo es ${idDespues.text}');
+                  // print('el trimestre cuando el registro es nuevo $trimestreN');
+                  // print('registrar nuevo cliente');
                   InsertarCliente().agregarCliente(Cliente(
                     clienteID: (int.parse(idDespues.text)),
                     cliente: cliente.text,

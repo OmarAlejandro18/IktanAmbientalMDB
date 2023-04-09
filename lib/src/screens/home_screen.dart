@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _datos = [];
+  // ignore: unused_field
   bool _isLoading = false;
   @override
   void initState() {
@@ -107,11 +108,43 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : ListView.builder(
               itemCount: _datos.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text('Nombre: ${_datos[index]['cliente']}'),
-                  subtitle:
-                      Text('ciudad de cliente: ${_datos[index]['ciudad']}'),
+              itemBuilder: (BuildContext context, int i) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, right: 20, bottom: 10, left: 20),
+                  child: Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    child: Card(
+                      elevation: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Center(
+                            child: Text(
+                              'Cliente N°${i + 1}',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(' Nombre del Cliente: ${_datos[i]['cliente']}'),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(' Ciudad del Cliente: ${_datos[i]['ciudad']}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               },
             ),

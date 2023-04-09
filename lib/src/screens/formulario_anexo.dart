@@ -82,7 +82,7 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ingresa Los Datos del Anexo 5'),
+        title: const Center(child: Text('Ingresa Los Datos del Anexo 5')),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -372,8 +372,8 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                       ),
                     ),
                     onPressed: () async {
-                      print('el id del cliente es ${widget.clienteID}');
-                      print('el trimestre es ${widget.trimestre}');
+                      //print('el id del cliente es ${widget.clienteID}');
+                      //print('el trimestre es ${widget.trimestre}');
                       InsertarAnexoCinco().insertarAnexoCinco(AnexoCinco(
                         anexoID: DateTime.now().millisecondsSinceEpoch ~/ 1000,
                         // INSTALACION
