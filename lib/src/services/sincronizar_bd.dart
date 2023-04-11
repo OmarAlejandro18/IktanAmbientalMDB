@@ -1,21 +1,21 @@
 import 'dart:io';
 import 'package:cloudinary/cloudinary.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:iktanambiental/src/db/helper_db.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 Cloudinary _cloudinary = Cloudinary.signedConfig(
-  apiKey: '576934555552933',
-  apiSecret: '1xrc0xQ4SUQHi0LnSD4ePwD6ZEY',
-  cloudName: 'dcx9cajbb',
+  apiKey: dotenv.env['API_KEY']!,
+  apiSecret: dotenv.env['API_S']!,
+  cloudName: dotenv.env['CLOUD']!,
 );
 
-void sincronizarClienteAMongo() async {
+String _uri = dotenv.env['URI']!;
+
+Future<void> sincronizarClienteAMongo() async {
   final db = await DatabaseProvider.db.database;
   final List<Map<String, dynamic>> registros = await db!.query('cliente');
-  // Conectar a MongoDB Atlas
-  const String uri =
-      'mongodb+srv://iktanAmbiental:v8BkpUKICq5Rvhqf@cluster1.u3cetrx.mongodb.net/IKTAN_AMBIENTAL?retryWrites=true&w=majority';
-  final mongodb = await Db.create(uri);
+  final mongodb = await Db.create(_uri);
   await mongodb.open();
   var coleccion = mongodb.collection('Clientes');
 
@@ -48,12 +48,10 @@ void sincronizarClienteAMongo() async {
   await mongodb.close();
 }
 
-void sincronizarseccionIIAMongo() async {
+Future<void> sincronizarseccionIIAMongo() async {
   final db = await DatabaseProvider.db.database;
   final List<Map<String, dynamic>> registros = await db!.query('anexocinco');
-  const String uri =
-      'mongodb+srv://iktanAmbiental:v8BkpUKICq5Rvhqf@cluster1.u3cetrx.mongodb.net/IKTAN_AMBIENTAL?retryWrites=true&w=majority';
-  final mongodb = await Db.create(uri);
+  final mongodb = await Db.create(_uri);
   await mongodb.open();
   final coleccion = mongodb.collection('SeccionII');
 
@@ -70,24 +68,26 @@ void sincronizarseccionIIAMongo() async {
           File imagen1 = File(registro['imagen']);
           File imagen2 = File(registro['imagenInfrarroja']);
 
-          final response1 = await _cloudinary.upload(
-              file: imagen1.path,
-              fileBytes: imagen1.readAsBytesSync(),
-              folder: 'seccionII/imagenes',
-              resourceType: CloudinaryResourceType.image,
-              fileName: 'imagenNor${registro['anexoID']}');
+          final Future<CloudinaryResponse> response1Future = _cloudinary.upload(
+            file: imagen1.path,
+            folder: 'seccionII/imagenes',
+            resourceType: CloudinaryResourceType.image,
+            fileName: 'imagenNor${registro['anexoID']}',
+          );
 
-          final response2 = await _cloudinary.upload(
-              file: imagen2.path,
-              fileBytes: imagen2.readAsBytesSync(),
-              folder: 'seccionII/imagenesInfrarrojas',
-              resourceType: CloudinaryResourceType.image,
-              fileName: 'imagenInfra${registro['anexoID']}');
+          final Future<CloudinaryResponse> response2Future = _cloudinary.upload(
+            file: imagen2.path,
+            folder: 'seccionII/imagenesInfrarrojas',
+            resourceType: CloudinaryResourceType.image,
+            fileName: 'imagenInfra${registro['anexoID']}',
+          );
 
-          final urlImagen1 = response1.secureUrl;
-          final urlImagen2 = response2.secureUrl;
-
-          //print('ya obtuve las imagenes url');
+          final List<CloudinaryResponse> responses =
+              await Future.wait([response1Future, response2Future]);
+          final String urlImagen1 = responses[0].secureUrl!;
+          final String urlImagen2 = responses[1].secureUrl!;
+          // final urlImagen1 = response1.secureUrl;
+          // final urlImagen2 = response2.secureUrl;
 
           recordsToInsert.add({
             'anexoID': registro['anexoID'],
@@ -148,7 +148,6 @@ void sincronizarseccionIIAMongo() async {
           .map((record) => Map<String, dynamic>.from(record))
           .toList();
       await mongodb.collection('SeccionII').insertMany(mappedRecords);
-      //print('Registros insertados en MongoDB: ${recordsToInsert.length}');
     }
     await db.delete('anexocinco');
     //print('datos de la BD borrados');

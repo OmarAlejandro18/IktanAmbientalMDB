@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:iktanambiental/src/db/obtener_datos.dart';
 import 'package:iktanambiental/src/screens/formulario_cliente_screen.dart';
@@ -15,8 +16,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _datos = [];
-  // ignore: unused_field
-  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -24,10 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _getDatosCliente() async {
-    List<Map<String, dynamic>> datos =
-        await getDataFromTable('cliente'); // Llama al método para obtener datos
+    List<Map<String, dynamic>> datos = await getDataFromTable('cliente');
     setState(() {
-      _datos = datos; // Actualiza el estado del widget con los datos obtenidos
+      _datos = datos;
     });
   }
 
@@ -46,14 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
       key: _scaffey,
       appBar: AppBar(
         title: const Center(
-          child: Text('Datos Instalación-Inspección'),
+          child: Text('Datos Instalación - Inspección'),
         ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.cloud),
             onPressed: () async {
               if (await hayDatosInspeccion()) {
-                // ignore: use_build_context_synchronously
                 showDialog(
                   context: context,
                   barrierDismissible:
@@ -72,24 +69,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 );
-                setState(() {
-                  _isLoading = true; // Mostrar indicador de carga
-                });
 
-                // Simular espera de 2 segundos
                 await Future.delayed(const Duration(seconds: 10));
-
                 // Llamar a los métodos de sincronización
-                sincronizarClienteAMongo();
-                sincronizarseccionIIAMongo();
+                await sincronizarClienteAMongo();
+                await sincronizarseccionIIAMongo();
 
-                setState(() {
-                  _isLoading = false; // Ocultar indicador de carga
-                });
-
-                // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 _showSnackBar();
+              } else {
+                showDialog(
+                  context: context,
+                  barrierDismissible:
+                      false, // Impedir cerrar el AlertDialog al hacer clic fuera de él
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Icon(
+                        Icons.warning_amber_rounded,
+                        color: Colors.red,
+                        size: 50,
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          SizedBox(height: 10),
+                          Text('No hay información por subir'),
+                        ],
+                      ),
+                    );
+                  },
+                );
+
+                await Future.delayed(const Duration(seconds: 1));
+                Navigator.of(context).pop();
               }
             },
           ),

@@ -5,8 +5,10 @@ import 'package:iktanambiental/src/theme/app_tema.dart';
 import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
+  await dotenv.load(fileName: '.env');
   runApp(const MyApp());
 }
 
