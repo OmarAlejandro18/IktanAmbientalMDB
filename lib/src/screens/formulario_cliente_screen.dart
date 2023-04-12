@@ -169,6 +169,7 @@ class NuevoClienteForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hayCliente = Provider.of<ClienteProvider>(context);
     final btnN = Provider.of<BotonClienteProvider>(context);
     return Column(
       children: [
@@ -255,6 +256,7 @@ class NuevoClienteForm extends StatelessWidget {
                 cliente.text = '';
                 ciudad.text = '';
                 trimestre.text = '';
+                hayCliente.setCliente = '';
               }
             },
             child: btnN.getTextBoton == 'Si'

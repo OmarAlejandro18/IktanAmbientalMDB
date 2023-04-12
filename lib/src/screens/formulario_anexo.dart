@@ -57,7 +57,7 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
   // REPARADO NO
   final noReparadofaltaComponentes = TextEditingController();
   final fechaRemisionComponente = TextEditingController();
-  final fechaReperacionComponente = TextEditingController();
+  final fechaReparacionComponente = TextEditingController();
   final fechaRemplazoEquipo = TextEditingController();
   final volumenMetano = TextEditingController();
 
@@ -79,7 +79,7 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final esReparado = Provider.of<ReparadoProvider>(context);
-
+    final noRepa = Provider.of<NoReparadoProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Ingresa Los Datos del Anexo 5')),
@@ -88,13 +88,16 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
         child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
                   height: 30,
                 ),
-                const Text(
-                  'Datos de la Instalación',
-                  style: TextStyle(fontSize: 18),
+                const Center(
+                  child: Text(
+                    'Datos de la Instalación',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -131,9 +134,11 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                const Text(
-                  'Datos de la inspección',
-                  style: TextStyle(fontSize: 18),
+                const Center(
+                  child: Text(
+                    'Datos de la inspección',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -201,27 +206,29 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                CampoInspeccion(
+                CampoObligatorio(
                     controlador: justificacionDesviacion,
                     hinText: 'Justificación de la desviación'),
                 const SizedBox(
                   height: 15,
                 ),
-                CampoInspeccion(
+                CampoObligatorio(
                     controlador: interferenciaDeteccion,
                     hinText: 'Interferencia detección'),
                 const SizedBox(
                   height: 15,
                 ),
-                CampoInspeccion(
+                CampoObligatorio(
                     controlador: concentracionPrevia,
-                    hinText: 'Concentración previa'),
+                    hinText: 'Concentración previa (ppm)'),
                 const SizedBox(
                   height: 40,
                 ),
-                const Text(
-                  'Reparación',
-                  style: TextStyle(fontSize: 18),
+                const Center(
+                  child: Text(
+                    'Reparación',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -237,7 +244,7 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                         concentracionPosteriorReparacion,
                     noReparadofaltaComponentes: noReparadofaltaComponentes,
                     fechaRemisionComponente: fechaRemisionComponente,
-                    fechaReperacionComponente: fechaReperacionComponente,
+                    fechaReparacionComponente: fechaReparacionComponente,
                     fechaRemplazoEquipo: fechaRemplazoEquipo,
                     volumenMetano: volumenMetano),
                 const SizedBox(
@@ -253,24 +260,29 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                         horaReparacion: horaReparacion,
                         fechaComprobacionReparacion:
                             fechaComprobacionReparacion,
-                        horaComprobacionReparacion: horaComprobacionReparacion,
-                        concentracionPosteriorReparacion:
-                            concentracionPosteriorReparacion)
+                        horaComprobacionReparacion: horaComprobacionReparacion)
                     : Container(),
-                (esReparado.getReparado == 'No')
-                    ? ReparadoNo(
-                        noReparadofaltaComponentes: noReparadofaltaComponentes,
-                        fechaRemisionComponente: fechaRemisionComponente,
-                        fechaReperacionComponente: fechaReperacionComponente,
-                        fechaRemplazoEquipo: fechaRemplazoEquipo,
-                        volumenMetano: volumenMetano)
-                    : Container(),
+                ConcentracionPosteriorReparacion(
+                    concentracionPosteriorReparacion:
+                        concentracionPosteriorReparacion,
+                    hinText: 'Concentración posterior a la reparación (ppm)'),
                 const SizedBox(
                   height: 15,
                 ),
-                const Text(
-                  'Fuga',
-                  style: TextStyle(fontSize: 18),
+                ReparadoNo(
+                    noReparadofaltaComponentes: noReparadofaltaComponentes,
+                    fechaRemisionComponente: fechaRemisionComponente,
+                    fechaReparacionComponente: fechaReparacionComponente,
+                    fechaRemplazoEquipo: fechaRemplazoEquipo,
+                    volumenMetano: volumenMetano),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Center(
+                  child: Text(
+                    'Fuga',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -283,216 +295,312 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                const Text(
-                  'Fotos',
-                  style: TextStyle(fontSize: 18),
+                const Center(
+                  child: Text(
+                    'Fotos',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                SizedBox(
-                  width: size.width * 0.85,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25, bottom: 5),
+                  child: Text(
+                    'Campo Obligatorio',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.red),
+                  ),
+                ),
+                Center(
+                  child: SizedBox(
+                    width: size.width * 0.85,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
                         ),
-                      ),
-                      onPressed: () async {
-                        imageF = await cargarFotoFirestore();
-                        if (imageF == null) {
-                          imagen.text = 'null';
-                        } else {
-                          setState(() {
-                            imgUploadF = File(imageF!.path);
-                            imagen.text = imgUploadF.path;
-                          });
-                        }
-                      },
-                      child: const Text('Tomar Fotografía')),
+                        onPressed: () async {
+                          imageF = await cargarFotoFirestore();
+                          if (imageF == null) {
+                            imagen.text = 'null';
+                          } else {
+                            setState(() {
+                              imgUploadF = File(imageF!.path);
+                              imagen.text = imgUploadF.path;
+                            });
+                          }
+                        },
+                        child: const Text('Tomar Fotografía')),
+                  ),
                 ),
                 imagen.text != 'null' && imagen.text != ''
-                    ? SizedBox(
-                        width: 200,
-                        height: 100,
-                        child: (imagen.text != 'null' && imagen.text != '')
-                            ? Image.file(imgUploadF)
-                            : const Text(''),
+                    ? Center(
+                        child: SizedBox(
+                          width: 200,
+                          height: 100,
+                          child: (imagen.text != 'null' && imagen.text != '')
+                              ? Image.file(imgUploadF)
+                              : const Text(''),
+                        ),
                       )
                     : const SizedBox(),
                 const SizedBox(
                   height: 15,
                 ),
-                SizedBox(
-                  width: size.width * 0.85,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25, bottom: 5),
+                  child: Text(
+                    'Campo Obligatorio',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.red),
+                  ),
+                ),
+                Center(
+                  child: SizedBox(
+                    width: size.width * 0.85,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
                         ),
-                      ),
-                      onPressed: () async {
-                        imageT = await cargarFotoTermograficaFirestore();
-                        if (imageT == null) {
-                          imagenInfrarroja.text = 'null';
-                        } else {
-                          setState(() {
-                            imgUploadT = File(imageT!.path);
-                            imagenInfrarroja.text = imgUploadT.path;
-                          });
-                        }
-                      },
-                      child: const Text('Tomar Fotografía Infrarroja')),
+                        onPressed: () async {
+                          imageT = await cargarFotoTermograficaFirestore();
+                          if (imageT == null) {
+                            imagenInfrarroja.text = 'null';
+                          } else {
+                            setState(() {
+                              imgUploadT = File(imageT!.path);
+                              imagenInfrarroja.text = imgUploadT.path;
+                            });
+                          }
+                        },
+                        child: const Text('Tomar Fotografía Infrarroja')),
+                  ),
                 ),
                 imagenInfrarroja.text != 'null' && imagenInfrarroja.text != ''
-                    ? SizedBox(
-                        width: 200,
-                        height: 100,
-                        child: (imagenInfrarroja.text != 'null' &&
-                                imagenInfrarroja.text != '')
-                            ? Image.file(imgUploadT)
-                            : const Text(''),
+                    ? Center(
+                        child: SizedBox(
+                          width: 200,
+                          height: 100,
+                          child: (imagenInfrarroja.text != 'null' &&
+                                  imagenInfrarroja.text != '')
+                              ? Image.file(imgUploadT)
+                              : const Text(''),
+                        ),
                       )
                     : const SizedBox(),
                 const SizedBox(
                   height: 30,
                 ),
-
                 // ENVIAR DATOS
-
-                SizedBox(
-                  width: size.width * 0.85,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppTheme.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                Center(
+                  child: SizedBox(
+                    width: size.width * 0.85,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                       ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate() &&
+                            (imagen.text != '') &&
+                            (imagenInfrarroja.text != '')) {
+                          InsertarAnexoCinco().insertarAnexoCinco(AnexoCinco(
+                            anexoID:
+                                DateTime.now().millisecondsSinceEpoch ~/ 1000,
+                            // INSTALACION
+                            nombreInstalacion: nombreInstalacion.text == ''
+                                ? 'N/A'
+                                : nombreInstalacion.text,
+                            idComponente: idComponente.text == ''
+                                ? 'N/A'
+                                : idComponente.text,
+                            ubicacionInstalacion:
+                                ubicacionInstalacion.text == ''
+                                    ? 'N/A'
+                                    : ubicacionInstalacion.text,
+                            equipoCritico: equipoCritico.text == ''
+                                ? 'N/A'
+                                : equipoCritico.text,
+                            inspeccionTecnicaRiesgo:
+                                inspeccionTecnicaRiesgo.text == ''
+                                    ? 'N/A'
+                                    : inspeccionTecnicaRiesgo.text,
+
+                            // INSPECCION
+                            nombrePersonal: nombrePersonal.text == ''
+                                ? 'N/A'
+                                : nombrePersonal.text,
+                            fechaInicioInspeccion:
+                                fechaInicioInspeccion.text == ''
+                                    ? ''
+                                    : fechaInicioInspeccion.text,
+                            horaInicioInspeccion:
+                                horaInicioInspeccion.text == ''
+                                    ? ''
+                                    : horaInicioInspeccion.text,
+                            fechafinalizacionInspeccion:
+                                fechafinalizacionInspeccion.text == ''
+                                    ? ''
+                                    : fechafinalizacionInspeccion.text,
+                            horafinalizacionInspeccion:
+                                horafinalizacionInspeccion.text == ''
+                                    ? ''
+                                    : horafinalizacionInspeccion.text,
+                            velocidadViento: velocidadViento.text == ''
+                                ? 'N/A'
+                                : velocidadViento.text,
+                            temperatura: temperatura.text == ''
+                                ? 'N/A'
+                                : temperatura.text,
+                            instrumentoUtilizado:
+                                instrumentoUtilizado.text == ''
+                                    ? 'N/A'
+                                    : instrumentoUtilizado.text,
+                            fechaCalibracion: fechaCalibracion.text == ''
+                                ? ''
+                                : fechaCalibracion.text,
+                            desviacionProcedimiento:
+                                desviacionProcedimiento.text == ''
+                                    ? 'N/A'
+                                    : desviacionProcedimiento.text,
+                            justificacionDesviacion:
+                                justificacionDesviacion.text == ''
+                                    ? 'N/A'
+                                    : justificacionDesviacion.text,
+                            interferenciaDeteccion:
+                                interferenciaDeteccion.text == ''
+                                    ? 'N/A'
+                                    : interferenciaDeteccion.text,
+                            concentracionPrevia: concentracionPrevia.text == ''
+                                ? 'N/A'
+                                : concentracionPrevia.text,
+                            reparado:
+                                reparado.text == '' ? 'N/A' : reparado.text,
+
+                            // REPARADO SI
+                            fechaReparacion: fechaReparacion.text == ''
+                                ? ''
+                                : fechaReparacion.text,
+                            horaReparacion: horaReparacion.text == ''
+                                ? ''
+                                : horaReparacion.text,
+                            fechaComprobacionReparacion:
+                                fechaComprobacionReparacion.text == ''
+                                    ? ''
+                                    : fechaComprobacionReparacion.text,
+                            horaComprobacionReparacion:
+                                horaComprobacionReparacion.text == ''
+                                    ? ''
+                                    : horaComprobacionReparacion.text,
+                            concentracionPosteriorReparacion:
+                                concentracionPosteriorReparacion.text == ''
+                                    ? 'N/A'
+                                    : concentracionPosteriorReparacion.text,
+
+                            // REPARADO NO
+                            noReparadofaltaComponentes:
+                                noReparadofaltaComponentes.text == ''
+                                    ? 'N/A'
+                                    : noReparadofaltaComponentes.text,
+                            fechaRemisionComponente:
+                                fechaRemisionComponente.text == ''
+                                    ? ''
+                                    : fechaRemisionComponente.text,
+                            fechaReparacionComponente:
+                                fechaReparacionComponente.text == ''
+                                    ? ''
+                                    : fechaReparacionComponente.text,
+                            fechaRemplazoEquipo: fechaRemplazoEquipo.text == ''
+                                ? ''
+                                : fechaRemplazoEquipo.text,
+                            volumenMetano: volumenMetano.text == ''
+                                ? ''
+                                : volumenMetano.text,
+                            // FUGA
+                            fuga: fuga.text == '' ? 'N/A' : fuga.text,
+                            observacionPersonal: observacionPersonal.text == ''
+                                ? 'N/A'
+                                : observacionPersonal.text,
+                            observacion: observacion.text == ''
+                                ? 'N/A'
+                                : observacion.text,
+
+                            // IMAGENES
+                            imagen: imagen.text,
+                            imagenInfrarroja: imagenInfrarroja.text,
+
+                            anexoURL: '',
+                            informeURL: '',
+                            trimestre: widget.trimestre,
+                            clienteID: widget.clienteID,
+                          ));
+
+                          // INSTALACION
+                          nombreInstalacion.text = '';
+                          idComponente.text = '';
+                          ubicacionInstalacion.text = '';
+                          equipoCritico.text = '';
+                          inspeccionTecnicaRiesgo.text = '';
+
+                          // INSPECCION
+                          nombrePersonal.text = '';
+                          fechaInicioInspeccion.text = '';
+                          horaInicioInspeccion.text = '';
+                          fechafinalizacionInspeccion.text = '';
+                          horafinalizacionInspeccion.text = '';
+                          velocidadViento.text = '';
+                          temperatura.text = '';
+                          instrumentoUtilizado.text = '';
+                          fechaCalibracion.text = '';
+                          desviacionProcedimiento.text = '';
+                          justificacionDesviacion.text = '';
+                          interferenciaDeteccion.text = '';
+                          concentracionPrevia.text = '';
+                          reparado.text = '';
+
+                          // REPARADO SI
+                          fechaReparacion.text = '';
+                          horaReparacion.text = '';
+                          fechaComprobacionReparacion.text = '';
+                          horaComprobacionReparacion.text = '';
+                          concentracionPosteriorReparacion.text = '';
+
+                          // REPARADO NO
+                          noReparadofaltaComponentes.text = '';
+                          fechaRemisionComponente.text = '';
+                          fechaReparacionComponente.text = '';
+                          fechaRemplazoEquipo.text = '';
+                          volumenMetano.text = '';
+
+                          // FUGA
+                          fuga.text = '';
+                          observacionPersonal.text = '';
+                          observacion.text = '';
+
+                          // IMAGENES
+                          imagen.text = '';
+                          imagenInfrarroja.text = '';
+
+                          esReparado.setReparado = '';
+                          noRepa.setNoReparado = '';
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()),
+                          );
+                        }
+                      },
+                      child: const Text('Guardar Datos Anexo V'),
                     ),
-                    onPressed: () async {
-                      //print('el id del cliente es ${widget.clienteID}');
-                      //print('el trimestre es ${widget.trimestre}');
-                      InsertarAnexoCinco().insertarAnexoCinco(AnexoCinco(
-                        anexoID: DateTime.now().millisecondsSinceEpoch ~/ 1000,
-                        // INSTALACION
-                        nombreInstalacion: nombreInstalacion.text,
-                        idComponente: idComponente.text,
-                        ubicacionInstalacion: ubicacionInstalacion.text,
-                        equipoCritico: equipoCritico.text,
-                        inspeccionTecnicaRiesgo: inspeccionTecnicaRiesgo.text,
-
-                        // INSPECCION
-                        nombrePersonal: nombrePersonal.text,
-                        fechaInicioInspeccion: fechaInicioInspeccion.text,
-                        horaInicioInspeccion: horaInicioInspeccion.text,
-                        fechafinalizacionInspeccion:
-                            fechafinalizacionInspeccion.text,
-                        horafinalizacionInspeccion:
-                            horafinalizacionInspeccion.text,
-                        velocidadViento: velocidadViento.text,
-                        temperatura: temperatura.text,
-                        instrumentoUtilizado: instrumentoUtilizado.text,
-                        fechaCalibracion: fechaCalibracion.text,
-                        desviacionProcedimiento: desviacionProcedimiento.text,
-                        justificacionDesviacion: justificacionDesviacion.text,
-                        interferenciaDeteccion: interferenciaDeteccion.text,
-                        concentracionPrevia: concentracionPrevia.text,
-                        reparado: reparado.text,
-
-                        // REPARADO SI
-                        fechaReparacion: fechaReparacion.text,
-                        horaReparacion: horaReparacion.text,
-                        fechaComprobacionReparacion:
-                            fechaComprobacionReparacion.text,
-                        horaComprobacionReparacion:
-                            horaComprobacionReparacion.text,
-                        concentracionPosteriorReparacion:
-                            concentracionPosteriorReparacion.text,
-
-                        // REPARADO NO
-                        noReparadofaltaComponentes:
-                            noReparadofaltaComponentes.text,
-                        fechaRemisionComponente: fechaRemisionComponente.text,
-                        fechaReperacionComponente:
-                            fechaReperacionComponente.text,
-                        fechaRemplazoEquipo: fechaRemplazoEquipo.text,
-                        volumenMetano: volumenMetano.text,
-
-                        // FUGA
-                        fuga: fuga.text,
-                        observacionPersonal: observacionPersonal.text,
-                        observacion: observacion.text,
-
-                        // IMAGENES
-                        imagen: imagen.text,
-                        imagenInfrarroja: imagenInfrarroja.text,
-
-                        anexoURL: '',
-                        informeURL: '',
-                        trimestre: widget.trimestre,
-
-                        clienteID: widget.clienteID,
-                      ));
-
-                      // INSTALACION
-                      nombreInstalacion.text = '';
-                      idComponente.text = '';
-                      ubicacionInstalacion.text = '';
-                      equipoCritico.text = '';
-                      inspeccionTecnicaRiesgo.text = '';
-
-                      // INSPECCION
-                      nombrePersonal.text = '';
-                      fechaInicioInspeccion.text = '';
-                      horaInicioInspeccion.text = '';
-                      fechafinalizacionInspeccion.text = '';
-                      horafinalizacionInspeccion.text = '';
-                      velocidadViento.text = '';
-                      temperatura.text = '';
-                      instrumentoUtilizado.text = '';
-                      fechaCalibracion.text = '';
-                      desviacionProcedimiento.text = '';
-                      justificacionDesviacion.text = '';
-                      interferenciaDeteccion.text = '';
-                      concentracionPrevia.text = '';
-                      reparado.text = '';
-
-                      // REPARADO SI
-                      fechaReparacion.text = '';
-                      horaReparacion.text = '';
-                      fechaComprobacionReparacion.text = '';
-                      horaComprobacionReparacion.text = '';
-                      concentracionPosteriorReparacion.text = '';
-
-                      // REPARADO NO
-                      noReparadofaltaComponentes.text = '';
-                      fechaRemisionComponente.text = '';
-                      fechaReperacionComponente.text = '';
-                      fechaRemplazoEquipo.text = '';
-                      volumenMetano.text = '';
-
-                      // FUGA
-
-                      fuga.text = '';
-                      observacionPersonal.text = '';
-                      observacion.text = '';
-
-                      // IMAGENES
-                      imagen.text = '';
-                      imagenInfrarroja.text = '';
-
-                      //Navigator.popUntil(context, ModalRoute.withName('inicio'));
-                      //Navigator.pushNamed(context, 'home');
-
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
-                      );
-                    },
-                    child: const Text('Guardar Datos Anexo V'),
                   ),
                 ),
                 const SizedBox(
@@ -535,19 +643,9 @@ class CampoInstalacion extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black87,
           ),
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Por favor ingrese $hinText';
-            }
-            return null;
-          },
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14),
-            prefixIcon: const Icon(
-              Icons.email,
-              color: Colors.white,
-            ),
+            contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
             hintText: hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),
@@ -588,11 +686,55 @@ class CampoInspeccion extends StatelessWidget {
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14),
-            prefixIcon: const Icon(
-              Icons.email,
-              color: Colors.white,
+            contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
+            hintText: hinText,
+            hintStyle: const TextStyle(color: Colors.black38),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CampoObligatorio extends StatelessWidget {
+  final TextEditingController controlador;
+  final String hinText;
+  const CampoObligatorio(
+      {super.key, required this.controlador, required this.hinText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(4, -4),
+              blurRadius: 6,
+              color: Colors.black26,
             ),
+          ],
+        ),
+        height: 100,
+        child: TextFormField(
+          maxLines: 40,
+          controller: controlador,
+          style: const TextStyle(
+            color: Colors.black87,
+          ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Por favor Ingrese $hinText';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.only(top: 14, left: 8, right: 5),
             hintText: hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),
@@ -614,7 +756,7 @@ class CampoPudoSerRapado extends StatelessWidget {
     required this.concentracionPosteriorReparacion,
     required this.noReparadofaltaComponentes,
     required this.fechaRemisionComponente,
-    required this.fechaReperacionComponente,
+    required this.fechaReparacionComponente,
     required this.fechaRemplazoEquipo,
     required this.volumenMetano,
   });
@@ -632,7 +774,7 @@ class CampoPudoSerRapado extends StatelessWidget {
   // REPARADO NO
   final TextEditingController noReparadofaltaComponentes;
   final TextEditingController fechaRemisionComponente;
-  final TextEditingController fechaReperacionComponente;
+  final TextEditingController fechaReparacionComponente;
   final TextEditingController fechaRemplazoEquipo;
   final TextEditingController volumenMetano;
 
@@ -661,11 +803,7 @@ class CampoPudoSerRapado extends StatelessWidget {
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14),
-            prefixIcon: const Icon(
-              Icons.email,
-              color: Colors.white,
-            ),
+            contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
             hintText: hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),
@@ -680,7 +818,7 @@ class CampoPudoSerRapado extends StatelessWidget {
 
   mostrarAlerta(BuildContext context) {
     final fueReperado = Provider.of<ReparadoProvider>(context, listen: false);
-
+    final noRepa = Provider.of<NoReparadoProvider>(context, listen: false);
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -701,9 +839,10 @@ class CampoPudoSerRapado extends StatelessWidget {
                 //REPARADO NO
                 noReparadofaltaComponentes.text = '';
                 fechaRemisionComponente.text = '';
-                fechaReperacionComponente.text = '';
+                fechaReparacionComponente.text = '';
                 fechaRemplazoEquipo.text = '';
                 volumenMetano.text = '';
+                noRepa.setNoReparado = '';
                 Navigator.of(context).pop();
               },
             ),
@@ -721,15 +860,60 @@ class CampoPudoSerRapado extends StatelessWidget {
                 //REPARADO NO
                 noReparadofaltaComponentes.text = '';
                 fechaRemisionComponente.text = '';
-                fechaReperacionComponente.text = '';
+                fechaReparacionComponente.text = '';
                 fechaRemplazoEquipo.text = '';
                 volumenMetano.text = '';
+                noRepa.setNoReparado = '';
                 Navigator.of(context).pop();
               },
             ),
           ],
         );
       },
+    );
+  }
+}
+
+class ConcentracionPosteriorReparacion extends StatelessWidget {
+  final TextEditingController concentracionPosteriorReparacion;
+  final String hinText;
+
+  const ConcentracionPosteriorReparacion(
+      {super.key,
+      required this.concentracionPosteriorReparacion,
+      required this.hinText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(4, -4),
+              blurRadius: 6,
+              color: Colors.black26,
+            ),
+          ],
+        ),
+        height: 60,
+        child: TextFormField(
+          controller: concentracionPosteriorReparacion,
+          style: const TextStyle(
+            color: Colors.black87,
+          ),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
+            hintText: hinText,
+            hintStyle: const TextStyle(color: Colors.black38),
+          ),
+        ),
+      ),
     );
   }
 }

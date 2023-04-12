@@ -37,11 +37,7 @@ class _CampoHoraState extends State<CampoHora> {
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14),
-            prefixIcon: const Icon(
-              Icons.email,
-              color: Colors.white,
-            ),
+            contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
             hintText: widget.hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),

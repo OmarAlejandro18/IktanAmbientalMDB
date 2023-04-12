@@ -33,7 +33,7 @@ class AnexoCinco {
   // REPARADO NO
   final String noReparadofaltaComponentes;
   final String fechaRemisionComponente;
-  final String fechaReperacionComponente;
+  final String fechaReparacionComponente;
   final String fechaRemplazoEquipo;
   final String volumenMetano;
 
@@ -88,7 +88,7 @@ class AnexoCinco {
     // REPARADO NO
     required this.noReparadofaltaComponentes,
     required this.fechaRemisionComponente,
-    required this.fechaReperacionComponente,
+    required this.fechaReparacionComponente,
     required this.fechaRemplazoEquipo,
     required this.volumenMetano,
 
@@ -144,7 +144,7 @@ class AnexoCinco {
       // REPARADO NO
       'noReparadofaltaComponentes': noReparadofaltaComponentes,
       'fechaRemisionComponente': fechaRemisionComponente,
-      'fechaReperacionComponente': fechaReperacionComponente,
+      'fechaReparacionComponente': fechaReparacionComponente,
       'fechaRemplazoEquipo': fechaRemplazoEquipo,
       'volumenMetano': volumenMetano,
 

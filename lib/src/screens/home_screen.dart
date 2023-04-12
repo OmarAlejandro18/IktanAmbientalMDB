@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   hayDatosInspeccion() async {
     List<Map<String, dynamic>> datosIns = await getDataFromTable('anexocinco');
+    print('los datos eran $datosIns');
     if (datosIns.isNotEmpty) {
       return true;
     } else {
@@ -53,8 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (await hayDatosInspeccion()) {
                 showDialog(
                   context: context,
-                  barrierDismissible:
-                      false, // Impedir cerrar el AlertDialog al hacer clic fuera de él
+                  barrierDismissible: false,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: const Text('Sincronizando...'),
@@ -71,17 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
 
                 await Future.delayed(const Duration(seconds: 10));
-                // Llamar a los métodos de sincronización
                 await sincronizarClienteAMongo();
                 await sincronizarseccionIIAMongo();
-
                 Navigator.of(context).pop();
                 _showSnackBar();
               } else {
                 showDialog(
                   context: context,
-                  barrierDismissible:
-                      false, // Impedir cerrar el AlertDialog al hacer clic fuera de él
+                  barrierDismissible: false,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: const Icon(
@@ -99,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 );
-
                 await Future.delayed(const Duration(seconds: 1));
                 Navigator.of(context).pop();
               }
@@ -168,7 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(builder: (context) => const ClienteScreen()),
           )
         },
-        //Navigator.pushNamed(context, 'clienteScreen'),
         child: const Icon(Icons.add),
       ),
     );

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Fuga extends StatelessWidget {
-  const Fuga(
-      {super.key,
-      required this.fuga,
-      required this.observacionPersonal,
-      required this.observacion,
-      });
+  const Fuga({
+    super.key,
+    required this.fuga,
+    required this.observacionPersonal,
+    required this.observacion,
+  });
 
   final TextEditingController fuga;
   final TextEditingController observacionPersonal;
@@ -14,18 +14,23 @@ class Fuga extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         AlertaFuga(valorCampo: fuga, hinText: '¿Hay Fuga?'),
         const SizedBox(
           height: 15,
         ),
-        CampoObservacion(controlador: observacionPersonal, hinText: 'Observación personal',),
+        CampoObservacion(
+          controlador: observacionPersonal,
+          hinText: 'Observación personal',
+        ),
         const SizedBox(
           height: 15,
         ),
-        CampoObservacion(controlador: observacion, hinText: 'Observación',),
+        CampoObservacion(
+          controlador: observacion,
+          hinText: 'Observación',
+        ),
       ],
     );
   }
@@ -63,11 +68,7 @@ class AlertaFuga extends StatelessWidget {
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14),
-            prefixIcon: const Icon(
-              Icons.email,
-              color: Colors.white,
-            ),
+            contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
             hintText: hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),
@@ -139,19 +140,9 @@ class CampoObservacion extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black87,
           ),
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Por favor ingrese $hinText';
-            }
-            return null;
-          },
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14),
-            prefixIcon: const Icon(
-              Icons.email,
-              color: Colors.white,
-            ),
+            contentPadding: const EdgeInsets.only(top: 14, left: 8, right: 5),
             hintText: hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),

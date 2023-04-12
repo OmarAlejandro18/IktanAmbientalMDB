@@ -64,30 +64,43 @@ Future<void> sincronizarseccionIIAMongo() async {
             await coleccion.findOne({'anexoID': registro['anexoID']});
 
         if (existente == null) {
-          // Cargar imagen a Cloudinary
           File imagen1 = File(registro['imagen']);
           File imagen2 = File(registro['imagenInfrarroja']);
+          final response1 = await _cloudinary.upload(
+              file: imagen1.path,
+              fileBytes: imagen1.readAsBytesSync(),
+              folder: 'seccionII/imagenes',
+              resourceType: CloudinaryResourceType.image,
+              fileName: 'imagenNor${registro['anexoID']}');
 
-          final Future<CloudinaryResponse> response1Future = _cloudinary.upload(
-            file: imagen1.path,
-            folder: 'seccionII/imagenes',
-            resourceType: CloudinaryResourceType.image,
-            fileName: 'imagenNor${registro['anexoID']}',
-          );
+          final response2 = await _cloudinary.upload(
+              file: imagen2.path,
+              fileBytes: imagen2.readAsBytesSync(),
+              folder: 'seccionII/imagenesInfrarrojas',
+              resourceType: CloudinaryResourceType.image,
+              fileName: 'imagenInfra${registro['anexoID']}');
 
-          final Future<CloudinaryResponse> response2Future = _cloudinary.upload(
-            file: imagen2.path,
-            folder: 'seccionII/imagenesInfrarrojas',
-            resourceType: CloudinaryResourceType.image,
-            fileName: 'imagenInfra${registro['anexoID']}',
-          );
+          final urlImagen1 = response1.secureUrl;
+          final urlImagen2 = response2.secureUrl;
 
-          final List<CloudinaryResponse> responses =
-              await Future.wait([response1Future, response2Future]);
-          final String urlImagen1 = responses[0].secureUrl!;
-          final String urlImagen2 = responses[1].secureUrl!;
-          // final urlImagen1 = response1.secureUrl;
-          // final urlImagen2 = response2.secureUrl;
+          // final Future<CloudinaryResponse> response1Future = _cloudinary.upload(
+          //   file: imagen1.path,
+          //   folder: 'seccionII/imagenes',
+          //   resourceType: CloudinaryResourceType.image,
+          //   fileName: 'imagenNor${registro['anexoID']}',
+          // );
+
+          // final Future<CloudinaryResponse> response2Future = _cloudinary.upload(
+          //   file: imagen2.path,
+          //   folder: 'seccionII/imagenesInfrarrojas',
+          //   resourceType: CloudinaryResourceType.image,
+          //   fileName: 'imagenInfra${registro['anexoID']}',
+          // );
+
+          // final List<CloudinaryResponse> responses =
+          //     await Future.wait([response1Future, response2Future]);
+          // final String urlImagen1 = responses[0].secureUrl!;
+          // final String urlImagen2 = responses[1].secureUrl!;
 
           recordsToInsert.add({
             'anexoID': registro['anexoID'],
@@ -123,7 +136,7 @@ Future<void> sincronizarseccionIIAMongo() async {
             'noReparadofaltaComponentes':
                 registro['noReparadofaltaComponentes'],
             'fechaRemisionComponente': registro['fechaRemisionComponente'],
-            'fechaReperacionComponente': registro['fechaReperacionComponente'],
+            'fechaReparacionComponente': registro['fechaReparacionComponente'],
             'fechaRemplazoEquipo': registro['fechaRemplazoEquipo'],
             'volumenMetano': registro['volumenMetano'],
             'fuga': registro['fuga'],
@@ -136,11 +149,7 @@ Future<void> sincronizarseccionIIAMongo() async {
             'trimestre': registro['trimestre'],
             'clienteID': registro['clienteID'],
           });
-          //print('Registro nuevo con ID ${registro['anexoID']}');
-        } else {
-          // print(
-          //     'Registro ya existente con ID ${registro['anexoID']}. No se actualiza.');
-        }
+        } else {}
       }
     }
     if (recordsToInsert.isNotEmpty) {
@@ -150,7 +159,6 @@ Future<void> sincronizarseccionIIAMongo() async {
       await mongodb.collection('SeccionII').insertMany(mappedRecords);
     }
     await db.delete('anexocinco');
-    //print('datos de la BD borrados');
     await mongodb.close();
   }
 }

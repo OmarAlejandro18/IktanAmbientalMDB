@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => FugaProvider()),
         ChangeNotifierProvider(create: (context) => ReparadoProvider()),
+        ChangeNotifierProvider(create: (context) => NoReparadoProvider()),
         ChangeNotifierProvider(create: (context) => ClienteProvider()),
         ChangeNotifierProvider(create: (context) => BotonClienteProvider())
       ],
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
         ],
         supportedLocales: const [
-          Locale('es', ''), // Configurar el idioma deseado aquí
+          Locale('es', ''),
         ],
         theme: AppTheme.lightTheme,
       ),
