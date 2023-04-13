@@ -47,14 +47,5 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Esta aplicación necesita acceso a la cámara para tomar fotos.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Esta aplicación necesita acceso a la galería de fotos para seleccionar imágenes.</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>
