@@ -43,10 +43,11 @@ class _CampoFechaState extends State<CampoFecha> {
             contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
             hintText: widget.hinText,
             hintStyle: const TextStyle(color: Colors.black38),
+            suffixIcon: null,
           ),
           onTap: () => {
             FocusScope.of(context).requestFocus(FocusNode()),
-            selectDate(context),
+            selectDate(context)
           },
         ),
       ),

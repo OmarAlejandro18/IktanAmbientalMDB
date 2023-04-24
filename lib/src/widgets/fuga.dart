@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Fuga extends StatelessWidget {
@@ -75,7 +78,7 @@ class AlertaFuga extends StatelessWidget {
           ),
           onTap: () => {
             FocusScope.of(context).requestFocus(FocusNode()),
-            mostrarAlerta(context),
+            Platform.isIOS ? mostrarAlertaIOS(context) : mostrarAlerta(context),
           },
         ),
       ),
@@ -107,6 +110,32 @@ class AlertaFuga extends StatelessWidget {
         );
       },
     );
+  }
+
+  mostrarAlertaIOS(BuildContext context) {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text(hinText),
+            actions: [
+              TextButton(
+                child: const Text("No"),
+                onPressed: () {
+                  valorCampo.text = 'No';
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text("Sí"),
+                onPressed: () {
+                  valorCampo.text = 'Si';
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }
 
