@@ -17,32 +17,34 @@ class ReparadoSi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final espaciosSizedBox = size.height * 0.02;
     return Column(
       children: [
         CampoFecha(
             controlador: fechaReparacion, hinText: 'Fecha de reparación'),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: espaciosSizedBox,
         ),
         CampoHora(
           controlador: horaReparacion,
           hinText: 'Hora de reparación',
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: espaciosSizedBox,
         ),
         CampoFecha(
             controlador: fechaComprobacionReparacion,
             hinText: 'Fecha de comprobación reparación'),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: espaciosSizedBox,
         ),
         CampoHora(
           controlador: horaComprobacionReparacion,
           hinText: 'Hora de comprobación reparación',
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: espaciosSizedBox,
         ),
       ],
     );

@@ -27,6 +27,7 @@ class ReparadoNo extends StatefulWidget {
 class _ReparadoNoState extends State<ReparadoNo> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     final noRepa = Provider.of<NoReparadoProvider>(context);
     return Column(
       children: [
@@ -43,14 +44,14 @@ class _ReparadoNoState extends State<ReparadoNo> {
                 fechaReparacionComponente: widget.fechaReparacionComponente,
                 fechaRemplazoEquipo: widget.fechaRemplazoEquipo)
             : Container(),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.02,
         ),
         CampoTexto(
             textoController: widget.volumenMetano,
             hinText: 'Volumen de Metano'),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.02,
         ),
       ],
     );
@@ -147,9 +148,7 @@ class _DropdownNoPudoSerReparadoPorFaltaState
           style: const TextStyle(
             color: Colors.black,
           ),
-          value: widget.valorCampo.text != ''
-              ? widget.valorCampo.text
-              : _dropdownValue,
+          value: _dropdownValue,
           onChanged: (value) {
             setState(() {
               _dropdownValue = value!;
@@ -188,97 +187,6 @@ class _DropdownNoPudoSerReparadoPorFaltaState
   }
 }
 
-// class AlertaNoReparadoFaltaComponentes extends StatelessWidget {
-//   const AlertaNoReparadoFaltaComponentes(
-//       {super.key,
-//       required this.valorCampo,
-//       required this.hinText,
-//       required this.fechaRemisionComponente,
-//       required this.fechaReparacionComponente,
-//       required this.fechaRemplazoEquipo});
-
-//   final TextEditingController fechaRemisionComponente;
-//   final TextEditingController fechaReparacionComponente;
-//   final TextEditingController fechaRemplazoEquipo;
-
-//   final TextEditingController valorCampo;
-//   final String hinText;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 25),
-//       child: Container(
-//         alignment: Alignment.centerLeft,
-//         decoration: BoxDecoration(
-//           color: Colors.white,
-//           borderRadius: BorderRadius.circular(10),
-//           boxShadow: const [
-//             BoxShadow(
-//               offset: Offset(4, -4),
-//               blurRadius: 6,
-//               color: Colors.black26,
-//             ),
-//           ],
-//         ),
-//         height: 60,
-//         child: TextFormField(
-//           controller: valorCampo,
-//           style: const TextStyle(
-//             color: Colors.black87,
-//           ),
-//           decoration: InputDecoration(
-//             border: InputBorder.none,
-//             contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
-//             hintText: hinText,
-//             hintStyle: const TextStyle(color: Colors.black38),
-//           ),
-//           onTap: () => {
-//             FocusScope.of(context).requestFocus(FocusNode()),
-//             mostrarAlerta(context),
-//           },
-//         ),
-//       ),
-//     );
-//   }
-
-//   mostrarAlerta(BuildContext context) {
-//     final noRepa = Provider.of<NoReparadoProvider>(context, listen: false);
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: Text(hinText),
-//           actions: [
-//             TextButton(
-//               child: const Text("No"),
-//               onPressed: () {
-//                 valorCampo.text = 'No';
-//                 noRepa.setNoReparado = 'No';
-//                 fechaRemisionComponente.text = '';
-//                 fechaReparacionComponente.text = '';
-//                 fechaRemplazoEquipo.text = '';
-//                 Navigator.of(context).pop();
-//               },
-//             ),
-//             TextButton(
-//               child: const Text("Sí"),
-//               onPressed: () {
-//                 valorCampo.text = 'Si';
-//                 noRepa.setNoReparado = 'Si';
-//                 fechaRemisionComponente.text = '';
-//                 fechaReparacionComponente.text = '';
-//                 fechaRemplazoEquipo.text = '';
-//                 Navigator.of(context).pop();
-//               },
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-// }
-
 class NoReparadoPorFaltaComponentesSi extends StatelessWidget {
   const NoReparadoPorFaltaComponentesSi(
       {super.key,
@@ -292,22 +200,23 @@ class NoReparadoPorFaltaComponentesSi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.02,
         ),
         CampoFecha(
             controlador: fechaRemisionComponente,
             hinText: 'Fecha de remisión componente'),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.02,
         ),
         CampoFecha(
             controlador: fechaReparacionComponente,
             hinText: 'Fecha de reparación componente'),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.02,
         ),
         CampoFecha(
             controlador: fechaRemplazoEquipo,

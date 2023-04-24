@@ -80,6 +80,9 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
     final size = MediaQuery.of(context).size;
     final esReparado = Provider.of<ReparadoProvider>(context);
     final noRepa = Provider.of<NoReparadoProvider>(context);
+
+    final espacioSizedBox = size.width * 0.03;
+    final textos = size.width * 0.03;
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Ingresa Los Datos del Anexo 5')),
@@ -90,148 +93,157 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
-                const Center(
+                Center(
                   child: Text(
                     'Datos de la Instalación',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: textos,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInstalacion(
                   controlador: nombreInstalacion,
                   hinText: 'Nombre de la Instalación',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInstalacion(
                   controlador: idComponente,
                   hinText: 'ID del componente',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInstalacion(
                   controlador: ubicacionInstalacion,
                   hinText: 'Ubicación de la Instalación',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 AlertaInstalacion(
                     valorCampo: equipoCritico, hinText: 'Equipo Critico'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 AlertaInstalacion(
                     valorCampo: inspeccionTecnicaRiesgo,
                     hinText: 'Inspección Tecnica de Riesgo'),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: size.height * 0.040,
                 ),
-                const Center(
+                Center(
                   child: Text(
                     'Datos de la inspección',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: textos,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInspeccion(
                   controlador: nombrePersonal,
                   hinText: 'Nombre del personal',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoFecha(
                   controlador: fechaInicioInspeccion,
                   hinText: 'Fecha de inicio de la inspección',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoHora(
                   controlador: horaInicioInspeccion,
                   hinText: 'Hora de inicio de la inspección',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoFecha(
                   controlador: fechafinalizacionInspeccion,
                   hinText: 'Fecha final de la inspección',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoHora(
                   controlador: horafinalizacionInspeccion,
                   hinText: 'Hora final de la inspección',
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInspeccion(
                     controlador: velocidadViento, hinText: 'Velocidad/Viento'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInspeccion(
                     controlador: temperatura, hinText: 'Temperatura'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInspeccion(
                     controlador: instrumentoUtilizado,
                     hinText: 'Instrumento Utilizado'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoFecha(
                     controlador: fechaCalibracion,
                     hinText: 'Fecha de la Calibración'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoInspeccion(
                     controlador: desviacionProcedimiento,
                     hinText: 'Desviación procedimiento'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoObligatorio(
                     controlador: justificacionDesviacion,
                     hinText: 'Justificación de la desviación'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoObligatorio(
                     controlador: interferenciaDeteccion,
                     hinText: 'Interferencia detección'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoObligatorio(
                     controlador: concentracionPrevia,
                     hinText: 'Concentración previa (ppm)'),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: size.height * 0.040,
                 ),
-                const Center(
+                Center(
                   child: Text(
                     'Reparación',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: textos,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 CampoPudoSerRapado(
                     reparado: reparado,
@@ -247,8 +259,9 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                     fechaReparacionComponente: fechaReparacionComponente,
                     fechaRemplazoEquipo: fechaRemplazoEquipo,
                     volumenMetano: volumenMetano),
-                const SizedBox(
-                  height: 15,
+
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 // APARECER EL OTRO FORMULARIO DE REPARADO
                 (esReparado.getReparado == '')
@@ -260,52 +273,61 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                         horaReparacion: horaReparacion,
                         fechaComprobacionReparacion:
                             fechaComprobacionReparacion,
-                        horaComprobacionReparacion: horaComprobacionReparacion)
+                        horaComprobacionReparacion: horaComprobacionReparacion,
+                      )
                     : Container(),
+
                 ConcentracionPosteriorReparacion(
                     concentracionPosteriorReparacion:
                         concentracionPosteriorReparacion,
                     hinText: 'Concentración posterior a la reparación (ppm)'),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 ReparadoNo(
-                    noReparadofaltaComponentes: noReparadofaltaComponentes,
-                    fechaRemisionComponente: fechaRemisionComponente,
-                    fechaReparacionComponente: fechaReparacionComponente,
-                    fechaRemplazoEquipo: fechaRemplazoEquipo,
-                    volumenMetano: volumenMetano),
-                const SizedBox(
-                  height: 15,
+                  noReparadofaltaComponentes: noReparadofaltaComponentes,
+                  fechaRemisionComponente: fechaRemisionComponente,
+                  fechaReparacionComponente: fechaReparacionComponente,
+                  fechaRemplazoEquipo: fechaRemplazoEquipo,
+                  volumenMetano: volumenMetano,
                 ),
-                const Center(
+                SizedBox(
+                  height: size.height * 0.040,
+                ),
+                Center(
                   child: Text(
                     'Fuga',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: textos,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 Fuga(
                   fuga: fuga,
                   observacionPersonal: observacionPersonal,
                   observacion: observacion,
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: size.height * 0.040,
                 ),
-                const Center(
+                Center(
                   child: Text(
                     'Fotos',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: textos,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(left: 25, bottom: 5),
+                  padding: EdgeInsets.only(left: 25, bottom: 20),
                   child: Text(
                     'Campo Obligatorio',
                     style: TextStyle(
@@ -315,6 +337,7 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                 Center(
                   child: SizedBox(
                     width: size.width * 0.85,
+                    height: size.height * 0.04,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.primary,
@@ -336,22 +359,30 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                         child: const Text('Tomar Fotografía')),
                   ),
                 ),
+                SizedBox(height: size.height * 0.02),
                 imagen.text != 'null' && imagen.text != ''
                     ? Center(
-                        child: SizedBox(
-                          width: 200,
-                          height: 100,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          width: size.width * 0.5,
+                          height: size.height * 0.2,
                           child: (imagen.text != 'null' && imagen.text != '')
-                              ? Image.file(imgUploadF)
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.file(
+                                    imgUploadF,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
                               : const Text(''),
                         ),
                       )
                     : const SizedBox(),
-                const SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: size.height * 0.03),
                 const Padding(
-                  padding: EdgeInsets.only(left: 25, bottom: 5),
+                  padding: EdgeInsets.only(left: 25, bottom: 20),
                   child: Text(
                     'Campo Obligatorio',
                     style: TextStyle(
@@ -361,6 +392,7 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                 Center(
                   child: SizedBox(
                     width: size.width * 0.85,
+                    height: size.height * 0.04,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.primary,
@@ -382,14 +414,24 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                         child: const Text('Tomar Fotografía Infrarroja')),
                   ),
                 ),
+                SizedBox(height: size.height * 0.03),
                 imagenInfrarroja.text != 'null' && imagenInfrarroja.text != ''
                     ? Center(
-                        child: SizedBox(
-                          width: 200,
-                          height: 100,
+                        child: Container(
+                          width: size.width * 0.5,
+                          height: size.height * 0.2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           child: (imagenInfrarroja.text != 'null' &&
                                   imagenInfrarroja.text != '')
-                              ? Image.file(imgUploadT)
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.file(
+                                    imgUploadT,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
                               : const Text(''),
                         ),
                       )
@@ -397,10 +439,12 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                 const SizedBox(
                   height: 30,
                 ),
+                SizedBox(height: size.height * 0.03),
                 // ENVIAR DATOS
                 Center(
                   child: SizedBox(
                     width: size.width * 0.85,
+                    height: size.height * 0.04,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.primary,
@@ -540,6 +584,11 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                             anexoURL: '',
                             informeURL: '',
                             trimestre: widget.trimestre,
+
+                            // FECHA DE CREACION DEL REGISTRO
+                            fechaRegistro:
+                                DateTime.now().millisecondsSinceEpoch,
+                            subidoNube: 0,
                             clienteID: widget.clienteID,
                           ));
 
@@ -744,7 +793,7 @@ class CampoObligatorio extends StatelessWidget {
   }
 }
 
-class CampoPudoSerRapado extends StatelessWidget {
+class CampoPudoSerRapado extends StatefulWidget {
   const CampoPudoSerRapado({
     super.key,
     required this.reparado,
@@ -779,6 +828,11 @@ class CampoPudoSerRapado extends StatelessWidget {
   final TextEditingController volumenMetano;
 
   @override
+  State<CampoPudoSerRapado> createState() => _CampoPudoSerRapadoState();
+}
+
+class _CampoPudoSerRapadoState extends State<CampoPudoSerRapado> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -797,14 +851,14 @@ class CampoPudoSerRapado extends StatelessWidget {
         ),
         height: 60,
         child: TextFormField(
-          controller: reparado,
+          controller: widget.reparado,
           style: const TextStyle(
             color: Colors.black87,
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
             contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
-            hintText: hinText,
+            hintText: widget.hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),
           onTap: () => {
@@ -828,42 +882,47 @@ class CampoPudoSerRapado extends StatelessWidget {
             TextButton(
               child: const Text("No"),
               onPressed: () {
-                reparado.text = 'No';
-                fueReperado.setReparado = reparado.text;
-                // REPARADO SI
-                fechaReparacion.text = '';
-                horaReparacion.text = '';
-                fechaComprobacionReparacion.text = '';
-                horaComprobacionReparacion.text = '';
-                concentracionPosteriorReparacion.text = '';
-                //REPARADO NO
-                noReparadofaltaComponentes.text = '';
-                fechaRemisionComponente.text = '';
-                fechaReparacionComponente.text = '';
-                fechaRemplazoEquipo.text = '';
-                volumenMetano.text = '';
-                noRepa.setNoReparado = '';
+                setState(() {
+                  widget.reparado.text = 'No';
+                  fueReperado.setReparado = widget.reparado.text;
+                  // REPARADO SI
+                  widget.fechaReparacion.text = '';
+                  widget.horaReparacion.text = '';
+                  widget.fechaComprobacionReparacion.text = '';
+                  widget.horaComprobacionReparacion.text = '';
+                  widget.concentracionPosteriorReparacion.text = '';
+                  //REPARADO NO
+                  widget.noReparadofaltaComponentes.text = '';
+                  widget.fechaRemisionComponente.text = '';
+                  widget.fechaReparacionComponente.text = '';
+                  widget.fechaRemplazoEquipo.text = '';
+                  widget.volumenMetano.text = '';
+                  noRepa.setNoReparado = '';
+                });
+
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
               child: const Text("Sí"),
               onPressed: () {
-                //REPARADO SI
-                reparado.text = 'Si';
-                fueReperado.setReparado = reparado.text;
-                fechaReparacion.text = '';
-                horaReparacion.text = '';
-                fechaComprobacionReparacion.text = '';
-                horaComprobacionReparacion.text = '';
-                concentracionPosteriorReparacion.text = '';
-                //REPARADO NO
-                noReparadofaltaComponentes.text = '';
-                fechaRemisionComponente.text = '';
-                fechaReparacionComponente.text = '';
-                fechaRemplazoEquipo.text = '';
-                volumenMetano.text = '';
-                noRepa.setNoReparado = '';
+                setState(() {
+                  //REPARADO SI
+                  widget.reparado.text = 'Si';
+                  fueReperado.setReparado = widget.reparado.text;
+                  widget.fechaReparacion.text = '';
+                  widget.horaReparacion.text = '';
+                  widget.fechaComprobacionReparacion.text = '';
+                  widget.horaComprobacionReparacion.text = '';
+                  widget.concentracionPosteriorReparacion.text = '';
+                  //REPARADO NO
+                  widget.noReparadofaltaComponentes.text = 'null';
+                  widget.fechaRemisionComponente.text = '';
+                  widget.fechaReparacionComponente.text = '';
+                  widget.fechaRemplazoEquipo.text = '';
+                  widget.volumenMetano.text = '';
+                  noRepa.setNoReparado = '';
+                });
                 Navigator.of(context).pop();
               },
             ),

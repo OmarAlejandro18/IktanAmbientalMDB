@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iktanambiental/src/db/helper_db.dart';
+import 'package:iktanambiental/src/db/obtener_datos.dart';
 import 'package:iktanambiental/src/providers/providers.dart';
 import 'package:iktanambiental/src/screens/screens.dart';
 import 'package:iktanambiental/src/theme/app_tema.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
+  eliminarRegistrosSubidos30dias();
   runApp(const MyApp());
 }
 
@@ -44,5 +47,21 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
       ),
     );
+  }
+}
+
+void eliminarRegistrosSubidos30dias() async {
+  final db = await DatabaseProvider.db.database;
+  List<Map<String, dynamic>> datosIns = await getDataFromTable('anexocinco');
+  if (datosIns.isNotEmpty) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000); //
+    await db!.delete(
+      'anexocinco',
+      where: 'fechaRegistro >= ? AND subidoNube = 1',
+      whereArgs: [thirtyDaysAgo],
+    );
+  } else {
+    print('no hay datos que eliminar');
   }
 }

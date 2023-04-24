@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:iktanambiental/src/db/obtener_datos.dart';
-import 'package:iktanambiental/src/screens/formulario_cliente_screen.dart';
+import 'package:iktanambiental/src/screens/screens.dart';
 import 'package:iktanambiental/src/services/sincronizar_bd.dart';
 import 'package:iktanambiental/src/theme/app_tema.dart';
 
@@ -31,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   hayDatosInspeccion() async {
     List<Map<String, dynamic>> datosIns = await getDataFromTable('anexocinco');
-    print('los datos eran $datosIns');
     if (datosIns.isNotEmpty) {
       return true;
     } else {
@@ -69,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 );
-
                 await Future.delayed(const Duration(seconds: 10));
                 await sincronizarClienteAMongo();
                 await sincronizarseccionIIAMongo();
@@ -117,39 +115,49 @@ class _HomeScreenState extends State<HomeScreen> {
           : ListView.builder(
               itemCount: _datos.length,
               itemBuilder: (BuildContext context, int i) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
-                  child: Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                    child: Card(
-                      elevation: 3,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Center(
-                            child: Text(
-                              'Cliente N°${i + 1}',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                final cliente = _datos[i];
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InspeccionesClienteScreen(
+                            clienteId: cliente['clienteID']),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10, right: 10, left: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25)),
+                      child: Card(
+                        elevation: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Text(
+                                'Cliente N°${i + 1}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(' Nombre del Cliente: ${_datos[i]['cliente']}'),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Text(' Ciudad del Cliente: ${_datos[i]['ciudad']}'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                                ' Nombre del Cliente: ${_datos[i]['cliente']}'),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Text(' Ciudad del Cliente: ${_datos[i]['ciudad']}'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

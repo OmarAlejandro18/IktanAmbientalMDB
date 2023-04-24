@@ -50,11 +50,12 @@ Future<void> sincronizarClienteAMongo() async {
 
 Future<void> sincronizarseccionIIAMongo() async {
   final db = await DatabaseProvider.db.database;
-  final List<Map<String, dynamic>> registros = await db!.query('anexocinco');
+  final List<Map<String, dynamic>> registros =
+      await db!.query('anexocinco', where: 'subidoNube = 0');
+
   final mongodb = await Db.create(_uri);
   await mongodb.open();
   final coleccion = mongodb.collection('SeccionII');
-
   var recordsToInsert = [];
 
   if (registros.isNotEmpty) {
@@ -66,41 +67,25 @@ Future<void> sincronizarseccionIIAMongo() async {
         if (existente == null) {
           File imagen1 = File(registro['imagen']);
           File imagen2 = File(registro['imagenInfrarroja']);
-          final response1 = await _cloudinary.upload(
-              file: imagen1.path,
-              fileBytes: imagen1.readAsBytesSync(),
-              folder: 'seccionII/imagenes',
-              resourceType: CloudinaryResourceType.image,
-              fileName: 'imagenNor${registro['anexoID']}');
 
-          final response2 = await _cloudinary.upload(
-              file: imagen2.path,
-              fileBytes: imagen2.readAsBytesSync(),
-              folder: 'seccionII/imagenesInfrarrojas',
-              resourceType: CloudinaryResourceType.image,
-              fileName: 'imagenInfra${registro['anexoID']}');
+          // List<File> imagenes = [imagen1, imagen2];
+          // List<String> carpeta = [
+          //   'seccionII/imagenes',
+          //   'seccionII/imagenesInfrarrojas'
+          // ];
+          // List<String> nombresImagenes = [
+          //   'imagenNor${registro['anexoID']}',
+          //   'imagenInfra${registro['anexoID']}'
+          // ];
 
-          final urlImagen1 = response1.secureUrl;
-          final urlImagen2 = response2.secureUrl;
+          // final List<String> urls = await _subirImagenes(
+          //     imagenes, carpeta, nombresImagenes, CloudinaryResourceType.image);
 
-          // final Future<CloudinaryResponse> response1Future = _cloudinary.upload(
-          //   file: imagen1.path,
-          //   folder: 'seccionII/imagenes',
-          //   resourceType: CloudinaryResourceType.image,
-          //   fileName: 'imagenNor${registro['anexoID']}',
-          // );
+          final urls =
+              await subirImagenesParalelo([imagen1, imagen2], registro);
 
-          // final Future<CloudinaryResponse> response2Future = _cloudinary.upload(
-          //   file: imagen2.path,
-          //   folder: 'seccionII/imagenesInfrarrojas',
-          //   resourceType: CloudinaryResourceType.image,
-          //   fileName: 'imagenInfra${registro['anexoID']}',
-          // );
-
-          // final List<CloudinaryResponse> responses =
-          //     await Future.wait([response1Future, response2Future]);
-          // final String urlImagen1 = responses[0].secureUrl!;
-          // final String urlImagen2 = responses[1].secureUrl!;
+          final urlImagen1 = urls[0];
+          final urlImagen2 = urls[1];
 
           recordsToInsert.add({
             'anexoID': registro['anexoID'],
@@ -147,18 +132,66 @@ Future<void> sincronizarseccionIIAMongo() async {
             'anexoURL': registro['anexoURL'],
             'informeURL': registro['informeURL'],
             'trimestre': registro['trimestre'],
+            'fechaRegistro': registro['fechaRegistro'],
+            'subidoNube': 1,
             'clienteID': registro['clienteID'],
           });
-        } else {}
+
+          // final response1 = await _cloudinary.upload(
+          //     file: imagen1.path,
+          //     fileBytes: imagen1.readAsBytesSync(),
+          //     folder: 'seccionII/imagenes',
+          //     resourceType: CloudinaryResourceType.image,
+          //     fileName: 'imagenNor${registro['anexoID']}');
+
+          // final response2 = await _cloudinary.upload(
+          //     file: imagen2.path,
+          //     fileBytes: imagen2.readAsBytesSync(),
+          //     folder: 'seccionII/imagenesInfrarrojas',
+          //     resourceType: CloudinaryResourceType.image,
+          //     fileName: 'imagenInfra${registro['anexoID']}');
+
+          // final urlImagen1 = response1.secureUrl;
+          // final urlImagen2 = response2.secureUrl;
+        }
       }
     }
+
     if (recordsToInsert.isNotEmpty) {
       List<Map<String, dynamic>> mappedRecords = recordsToInsert
           .map((record) => Map<String, dynamic>.from(record))
           .toList();
       await mongodb.collection('SeccionII').insertMany(mappedRecords);
+
+      await db.update(
+        'anexocinco',
+        {'subidoNube': 1},
+        where: 'subidoNube = 0',
+      );
     }
-    await db.delete('anexocinco');
+    //await db.delete('anexocinco');
     await mongodb.close();
   }
+}
+
+Future<List<String>> subirImagenesParalelo(
+    List<File> imagenes, registro) async {
+  final futures = imagenes.asMap().entries.map((entry) async {
+    final index = entry.key;
+    final imagen = entry.value;
+    final carpeta =
+        index == 0 ? 'seccionII/imagenes' : 'seccionII/imagenesInfrarrojas';
+    final nombreImagen = index == 0
+        ? 'imagenNor${registro['anexoID']}'
+        : 'imagenInfra${registro['anexoID']}';
+    final result = await _cloudinary.upload(
+      file: imagen.path,
+      fileBytes: imagen.readAsBytesSync(),
+      folder: carpeta,
+      resourceType: CloudinaryResourceType.image,
+      fileName: nombreImagen,
+    );
+    return result.secureUrl!;
+  });
+  return Future.wait(futures.toList().cast<Future<String>>());
 }

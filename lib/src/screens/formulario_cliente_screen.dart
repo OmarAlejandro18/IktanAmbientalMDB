@@ -66,86 +66,86 @@ class _ClienteScreenState extends State<ClienteScreen> {
         title: const Center(child: Text('Clientes')),
       ),
       body: SingleChildScrollView(
-          child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-                padding:
-                    EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 25),
-                child: Text(
-                    "Selecciona una opción, en caso de no estar la opción que requiere seleccione 'Crear nuevo cliente'")),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(4, -4),
-                      blurRadius: 6,
-                      color: Colors.black26,
-                    ),
-                  ],
-                ),
-                height: 60,
-                child: DropdownButtonFormField<Cliente>(
-                  focusNode: _dropdownFocusNode,
-                  value: _selectedCliente,
-                  items: _clientDropdownItems,
-                  onChanged: (value) {
-                    if (value == null) {
-                      btnN.setTextBoton = 'Si';
-                      hayCliente.setCliente = 'No';
-                      idDespues.text =
-                          (DateTime.now().millisecondsSinceEpoch ~/ 1000)
-                              .toString();
-                      cliente.text = '';
-                      ciudad.text = '';
-                      trimestre.text = '';
-                    } else {
-                      setState(() {
-                        btnN.setTextBoton = 'No';
-                        hayCliente.setCliente = 'Si';
-                        _selectedCliente = value;
-                        clienteID.text = value.clienteID.toString();
-                        idDespues.text = '';
-                        cliente.text = value.cliente;
-                        ciudad.text = value.ciudad;
-                        trimestre.text = value.trimestre;
-                      });
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Selecciona el Cliente',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 14),
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Colors.white,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              const Padding(
+                  padding:
+                      EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 25),
+                  child: Text(
+                      "Selecciona una opción, en caso de no estar la opción que requiere seleccione 'Crear nuevo cliente'")),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(4, -4),
+                        blurRadius: 6,
+                        color: Colors.black26,
+                      ),
+                    ],
+                  ),
+                  height: 60,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: DropdownButtonFormField<Cliente>(
+                      focusNode: _dropdownFocusNode,
+                      value: _selectedCliente,
+                      items: _clientDropdownItems,
+                      onChanged: (value) {
+                        if (value == null) {
+                          btnN.setTextBoton = 'Si';
+                          hayCliente.setCliente = 'No';
+                          idDespues.text =
+                              (DateTime.now().millisecondsSinceEpoch ~/ 1000)
+                                  .toString();
+                          cliente.text = '';
+                          ciudad.text = '';
+                          trimestre.text = '';
+                        } else {
+                          setState(() {
+                            btnN.setTextBoton = 'No';
+                            hayCliente.setCliente = 'Si';
+                            _selectedCliente = value;
+                            clienteID.text = value.clienteID.toString();
+                            idDespues.text = '';
+                            cliente.text = value.cliente;
+                            ciudad.text = value.ciudad;
+                            trimestre.text = value.trimestre;
+                          });
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Selecciona el Cliente',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(left: 20),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            hayCliente.getCliente != null && hayCliente.getCliente != ''
-                ? NuevoClienteForm(
-                    clienteID: clienteID,
-                    cliente: cliente,
-                    ciudad: ciudad,
-                    trimestre: trimestre,
-                    formKey: _formKey,
-                    idDespues: idDespues,
-                  )
-                : Container(),
-          ],
+              hayCliente.getCliente != null && hayCliente.getCliente != ''
+                  ? NuevoClienteForm(
+                      clienteID: clienteID,
+                      cliente: cliente,
+                      ciudad: ciudad,
+                      trimestre: trimestre,
+                      formKey: _formKey,
+                      idDespues: idDespues,
+                    )
+                  : Container(),
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }
@@ -171,86 +171,79 @@ class NuevoClienteForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final hayCliente = Provider.of<ClienteProvider>(context);
     final btnN = Provider.of<BotonClienteProvider>(context);
+    final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        const SizedBox(
-          height: 50,
+        SizedBox(
+          height: size.height * 0.05,
         ),
         const Text(
           'Datos del Cliente',
           style: TextStyle(fontSize: 18),
         ),
-        const SizedBox(
-          height: 25,
+        SizedBox(
+          height: size.height * 0.025,
         ),
         EntradaDato(
           controlador: cliente,
           hinText: 'Nombre del cliente',
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.025,
         ),
         EntradaDato(
           controlador: ciudad,
           hinText: 'Ciudad',
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.025,
         ),
         DropdownTrimestre(
           trimestre: trimestre,
         ),
-        const SizedBox(
-          height: 40,
+        SizedBox(
+          height: size.height * 0.045,
         ),
         SizedBox(
-          width: 200,
-          height: 40,
+          width: size.height * 0.20,
+          height: size.height * 0.045,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primary),
             onPressed: () async {
-              //print('El clienteID tiene el valor de ${clienteID.text}');
-              //print('El clienteID tiene el valor de ${idDespues.text}');
-
               if (formKey.currentState!.validate()) {
                 if (clienteID.text != '' && idDespues.text == '') {
                   final String trimestreN = trimestre.text;
-                  // print('ya se tiene un registro');
-                  // print('id del cliente que ya esta ${clienteID.text}');
-                  // print('id del cleinte nuevo es ${idDespues.text}');
-                  // print(
-                  //     'el trimestre cuando ya se tiene registro es $trimestreN');
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => FormularioAnexoScreen(
-                              clienteID: int.parse(clienteID.text),
-                              trimestre: trimestreN,
-                            )),
+                      builder: (context) => FormularioAnexoScreen(
+                        clienteID: int.parse(clienteID.text),
+                        trimestre: trimestreN,
+                      ),
+                    ),
                   );
                 }
 
                 if (idDespues.text != '' &&
                     (idDespues.text != clienteID.text)) {
                   final String trimestreN = trimestre.text;
-                  // print('id del cliente que ya esta ${clienteID.text}');
-                  // print('id del cleinte nuevo es ${idDespues.text}');
-                  // print('el trimestre cuando el registro es nuevo $trimestreN');
-                  // print('registrar nuevo cliente');
-                  InsertarCliente().agregarCliente(Cliente(
-                    clienteID: (int.parse(idDespues.text)),
-                    cliente: cliente.text,
-                    ciudad: ciudad.text,
-                    trimestre: trimestre.text,
-                  ));
+                  InsertarCliente().agregarCliente(
+                    Cliente(
+                      clienteID: (int.parse(idDespues.text)),
+                      cliente: cliente.text,
+                      ciudad: ciudad.text,
+                      trimestre: trimestre.text,
+                    ),
+                  );
 
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => FormularioAnexoScreen(
-                              clienteID: int.parse(idDespues.text),
-                              trimestre: trimestreN,
-                            )),
+                      builder: (context) => FormularioAnexoScreen(
+                        clienteID: int.parse(idDespues.text),
+                        trimestre: trimestreN,
+                      ),
+                    ),
                   );
                 }
                 cliente.text = '';
@@ -307,11 +300,7 @@ class EntradaDato extends StatelessWidget {
           },
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14),
-            prefixIcon: const Icon(
-              Icons.email,
-              color: Colors.white,
-            ),
+            contentPadding: const EdgeInsets.only(left: 20),
             hintText: hinText,
             hintStyle: const TextStyle(color: Colors.black38),
           ),
@@ -382,14 +371,10 @@ class _DropdownTrimestreState extends State<DropdownTrimestre> {
           ],
           decoration: const InputDecoration(
             border: InputBorder.none,
-            contentPadding: EdgeInsets.only(top: 14),
-            prefixIcon: Icon(
-              Icons.email,
-              color: Colors.white,
-            ),
+            contentPadding: EdgeInsets.only(left: 20),
             labelText: 'Seleccione el Trimestre',
             labelStyle: TextStyle(
-              color: Colors.black38, // Aquí se cambia el color del labelText
+              color: Colors.black38,
             ),
           ),
         ),

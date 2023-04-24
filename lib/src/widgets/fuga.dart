@@ -14,18 +14,19 @@ class Fuga extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         AlertaFuga(valorCampo: fuga, hinText: '¿Hay Fuga?'),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.02,
         ),
         CampoObservacion(
           controlador: observacionPersonal,
           hinText: 'Observación personal',
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: size.height * 0.02,
         ),
         CampoObservacion(
           controlador: observacion,

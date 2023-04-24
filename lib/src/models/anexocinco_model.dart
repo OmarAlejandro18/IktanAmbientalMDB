@@ -50,6 +50,11 @@ class AnexoCinco {
   final String anexoURL;
   final String informeURL;
   final String trimestre;
+
+  // FECHA PARA ELIMINAR LOS DATOS
+  final int fechaRegistro;
+  final int subidoNube;
+
   // FORANEA
   final int clienteID;
 
@@ -106,6 +111,10 @@ class AnexoCinco {
     required this.informeURL,
     required this.trimestre,
 
+    // fecha de creacion del registro
+    required this.fechaRegistro,
+    required this.subidoNube,
+
     // CLIENTE ID
     required this.clienteID,
   });
@@ -161,6 +170,10 @@ class AnexoCinco {
       'anexoURL': anexoURL,
       'informeURL': informeURL,
       'trimestre': trimestre,
+
+      //fECHA DE CREACION DE
+      'fechaRegistro': fechaRegistro,
+      'subidoNube': subidoNube,
 
       // CLIENTE
       'clienteID': clienteID,
