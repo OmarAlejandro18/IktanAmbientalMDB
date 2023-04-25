@@ -54,14 +54,13 @@ void eliminarRegistrosSubidos30dias() async {
   final db = await DatabaseProvider.db.database;
   List<Map<String, dynamic>> datosIns = await getDataFromTable('anexocinco');
   if (datosIns.isNotEmpty) {
-    final now = DateTime.now().millisecondsSinceEpoch;
-    final thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000); //
     await db!.delete(
       'anexocinco',
-      where: 'fechaRegistro >= ? AND subidoNube = 1',
-      whereArgs: [thirtyDaysAgo],
+      where: 'fechaRegistro <= ? AND subidoNube = ?',
+      whereArgs: [
+        DateTime.now().subtract(const Duration(days: 1)).millisecondsSinceEpoch,
+        1
+      ],
     );
-  } else {
-    print('no hay datos que eliminar');
   }
 }
