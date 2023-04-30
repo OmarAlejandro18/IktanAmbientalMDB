@@ -1,4 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:io';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iktanambiental/src/db/obtener_datos.dart';
 import 'package:iktanambiental/src/screens/screens.dart';
@@ -49,53 +53,21 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.cloud),
+            splashColor: Colors.transparent,
             onPressed: () async {
-              if (await hayDatosInspeccion()) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Sincronizando...'),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 10),
-                          Text('Por favor, espera...'),
-                        ],
-                      ),
-                    );
-                  },
-                );
-                await Future.delayed(const Duration(seconds: 10));
-                await sincronizarClienteAMongo();
-                await sincronizarseccionIIAMongo();
-                Navigator.of(context).pop();
-                _showSnackBar();
+              var connectivityResult = await Connectivity().checkConnectivity();
+              if (connectivityResult == ConnectivityResult.none) {
+                alertaNoInternet(context);
               } else {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Icon(
-                        Icons.warning_amber_rounded,
-                        color: Colors.red,
-                        size: 50,
-                      ),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          SizedBox(height: 10),
-                          Text('No hay información por subir'),
-                        ],
-                      ),
-                    );
-                  },
-                );
-                await Future.delayed(const Duration(seconds: 1));
-                Navigator.of(context).pop();
+                if (await hayDatosInspeccion()) {
+                  alertaNube(context);
+                  await sincronizarClienteAMongo();
+                  await sincronizarseccionIIAMongo();
+                  Navigator.of(context).pop();
+                  _showSnackBar();
+                } else {
+                  alertaNoDatos(context);
+                }
               }
             },
           ),
@@ -106,7 +78,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Icon(Icons.warning, size: 48),
+                  Icon(
+                    Icons.warning_amber_rounded,
+                    size: 100,
+                    color: AppTheme.primary,
+                  ),
                   Text('Aquí aparecerán los clientes registrados',
                       style: TextStyle(fontSize: 16)),
                 ],
@@ -182,4 +158,149 @@ class _HomeScreenState extends State<HomeScreen> {
         const SnackBar(content: Text('Datos subidos a la Nube Exitosamente'));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+}
+
+alertaNoInternet(BuildContext context) async {
+  Platform.isIOS
+      ? showCupertinoDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Icon(
+                Icons.wifi_off,
+                color: Colors.red,
+                size: 70,
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Ups!, no hay conexión a Internet',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        )
+      : showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Icon(
+                Icons.wifi_off,
+                color: Colors.red,
+                size: 70,
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Ups!, no hay conexión a Internet',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+  await Future.delayed(const Duration(seconds: 1));
+  Navigator.of(context).pop();
+}
+
+alertaNube(BuildContext context) {
+  Platform.isIOS
+      ? showCupertinoDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Text('Sincronizando...'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10),
+                  Text('Por favor, espera...'),
+                ],
+              ),
+            );
+          },
+        )
+      : showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Sincronizando...'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10),
+                  Text('Por favor, espera...'),
+                ],
+              ),
+            );
+          },
+        );
+}
+
+alertaNoDatos(BuildContext context) async {
+  Platform.isIOS
+      ? showCupertinoDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Icon(
+                Icons.warning_amber_rounded,
+                color: Colors.red,
+                size: 70,
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'No hay información para subir',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        )
+      : showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Icon(
+                Icons.warning_amber_rounded,
+                color: Colors.red,
+                size: 70,
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  SizedBox(height: 10),
+                  Text(
+                    'No hay información para subir',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+  await Future.delayed(const Duration(seconds: 1));
+  Navigator.of(context).pop();
 }

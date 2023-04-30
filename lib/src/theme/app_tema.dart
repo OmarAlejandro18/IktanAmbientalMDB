@@ -10,5 +10,7 @@ class AppTheme {
       backgroundColor: primary,
       elevation: 0,
     ),
+    textSelectionTheme:
+        const TextSelectionThemeData(selectionHandleColor: Colors.transparent),
   );
 }

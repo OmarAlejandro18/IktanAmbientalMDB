@@ -186,9 +186,9 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                 leyenda: 'volumen de Metano',
                                 valor: registro['volumenMetano']),
 
-                            TextoInspeccion(
-                                leyenda: 'Subido',
-                                valor: registro['subidoNube'].toString()),
+                            // TextoInspeccion(
+                            //     leyenda: 'Subido',
+                            //     valor: registro['subidoNube'].toString()),
 
                             const SizedBox(
                               height: 5,

@@ -205,7 +205,7 @@ class NuevoClienteForm extends StatelessWidget {
           height: size.height * 0.045,
         ),
         SizedBox(
-          width: size.height * 0.20,
+          width: size.height * 0.30,
           height: size.height * 0.045,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primary),

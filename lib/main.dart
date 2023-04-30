@@ -58,7 +58,9 @@ void eliminarRegistrosSubidos30dias() async {
       'anexocinco',
       where: 'fechaRegistro <= ? AND subidoNube = ?',
       whereArgs: [
-        DateTime.now().subtract(const Duration(days: 1)).millisecondsSinceEpoch,
+        DateTime.now()
+            .subtract(const Duration(days: 30))
+            .millisecondsSinceEpoch,
         1
       ],
     );

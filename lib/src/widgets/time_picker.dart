@@ -31,6 +31,7 @@ class _CampoHoraState extends State<CampoHora> {
         ),
         height: 60,
         child: TextFormField(
+          showCursor: false,
           controller: widget.controlador,
           style: const TextStyle(
             color: Colors.black87,
@@ -56,7 +57,6 @@ class _CampoHoraState extends State<CampoHora> {
     return showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      //helpText: 'Selecciona la hora',
       cancelText: 'Cancelar',
       confirmText: 'Confirmar',
       builder: (context, child) {
