@@ -43,8 +43,8 @@ class AnexoCinco {
   final String observacion;
 
   // IMAGENES
-  final String imagen;
-  final String imagenInfrarroja;
+  String imagen;
+  String imagenInfrarroja;
 
   // CAMPOS VACIOS
   final String anexoURL;
@@ -53,7 +53,7 @@ class AnexoCinco {
 
   // FECHA PARA ELIMINAR LOS DATOS
   final int fechaRegistro;
-  final int subidoNube;
+  int subidoNube;
 
   // FORANEA
   final int clienteID;
@@ -111,13 +111,60 @@ class AnexoCinco {
     required this.informeURL,
     required this.trimestre,
 
-    // fecha de creacion del registro
+    // fecha de creacion del map
     required this.fechaRegistro,
     required this.subidoNube,
 
     // CLIENTE ID
     required this.clienteID,
   });
+
+  factory AnexoCinco.fromMap(Map<String, dynamic> map) {
+    return AnexoCinco(
+      anexoID: map['anexoID'],
+      nombreInstalacion: map['nombreInstalacion'],
+      idComponente: map['idComponente'],
+      ubicacionInstalacion: map['ubicacionInstalacion'],
+      equipoCritico: map['equipoCritico'],
+      inspeccionTecnicaRiesgo: map['inspeccionTecnicaRiesgo'],
+      nombrePersonal: map['nombrePersonal'],
+      fechaInicioInspeccion: map['fechaInicioInspeccion'],
+      horaInicioInspeccion: map['horaInicioInspeccion'],
+      fechafinalizacionInspeccion: map['fechafinalizacionInspeccion'],
+      horafinalizacionInspeccion: map['horafinalizacionInspeccion'],
+      velocidadViento: map['velocidadViento'],
+      temperatura: map['temperatura'],
+      instrumentoUtilizado: map['instrumentoUtilizado'],
+      fechaCalibracion: map['fechaCalibracion'],
+      desviacionProcedimiento: map['desviacionProcedimiento'],
+      justificacionDesviacion: map['justificacionDesviacion'],
+      interferenciaDeteccion: map['interferenciaDeteccion'],
+      concentracionPrevia: map['concentracionPrevia'],
+      reparado: map['reparado'],
+      fechaReparacion: map['fechaReparacion'],
+      horaReparacion: map['horaReparacion'],
+      fechaComprobacionReparacion: map['fechaComprobacionReparacion'],
+      horaComprobacionReparacion: map['horaComprobacionReparacion'],
+      concentracionPosteriorReparacion: map['concentracionPosteriorReparacion'],
+      noReparadofaltaComponentes: map['noReparadofaltaComponentes'],
+      fechaRemisionComponente: map['fechaRemisionComponente'],
+      fechaReparacionComponente: map['fechaReparacionComponente'],
+      fechaRemplazoEquipo: map['fechaRemplazoEquipo'],
+      volumenMetano: map['volumenMetano'],
+      fuga: map['fuga'],
+      observacionPersonal: map['observacionPersonal'],
+      observacion: map['observacion'],
+      imagen: map['imagen'],
+      imagenInfrarroja: map['imagenInfrarroja'],
+      anexoURL: map['anexoURL'],
+      informeURL: map['informeURL'],
+      trimestre: map['trimestre'],
+      fechaRegistro: map['fechaRegistro'],
+      subidoNube: map['subidoNube'],
+      clienteID: map['clienteID'],
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'anexoID': anexoID,

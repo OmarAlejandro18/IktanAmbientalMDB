@@ -34,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   hayDatosInspeccion() async {
-    List<Map<String, dynamic>> datosIns = await getDataFromTable('anexocinco');
+    List<Map<String, dynamic>> datosIns =
+        await getDataFromTable('anexocinco', where: 'subidoNube = 0');
     if (datosIns.isNotEmpty) {
       return true;
     } else {
@@ -176,7 +177,7 @@ alertaNoInternet(BuildContext context) async {
                 mainAxisSize: MainAxisSize.min,
                 children: const [
                   Text(
-                    'Ups!, no hay conexión a Internet',
+                    'Ups!, No hay conexión a Internet',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -200,7 +201,7 @@ alertaNoInternet(BuildContext context) async {
                 mainAxisSize: MainAxisSize.min,
                 children: const [
                   Text(
-                    'Ups!, no hay conexión a Internet',
+                    'Ups!, No hay conexión a Internet',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
