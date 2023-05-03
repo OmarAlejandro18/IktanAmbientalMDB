@@ -8,7 +8,7 @@ Future<XFile?> cargarFotoFirestore() async {
 
 Future<XFile?> cargarFotoTermograficaFirestore() async {
   final picker = ImagePicker();
-  final image = await picker.pickImage(source: ImageSource.camera);
+  final image = await picker.pickImage(source: ImageSource.gallery);
   if (image != null) {
     return image;
   } else {
