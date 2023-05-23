@@ -108,33 +108,45 @@ class _HomeScreenState extends State<HomeScreen> {
                         const EdgeInsets.only(top: 10, right: 10, left: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Card(
-                        elevation: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Text(
-                                'Cliente N°${i + 1}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                                ' Nombre del Cliente: ${_datos[i]['cliente']}'),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(' Ciudad del Cliente: ${_datos[i]['ciudad']}'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.white10,
+                          width: 3,
                         ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            offset: const Offset(-2, 2),
+                          ),
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              'Cliente N°${i + 1}',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(' Nombre del Cliente: ${_datos[i]['cliente']}'),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(' Ciudad del Cliente: ${_datos[i]['ciudad']}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
                     ),
                   ),

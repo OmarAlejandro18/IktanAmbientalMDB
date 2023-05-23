@@ -55,22 +55,25 @@ class _CampoFechaState extends State<CampoFecha> {
 
   selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2023),
-        lastDate: DateTime(2030),
-        locale: const Locale('es', ''),
-        builder: (context, child) {
-          return temaDatePicker(context, child);
-        });
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1980),
+      lastDate: DateTime(2200),
+      locale: const Locale('es', ''),
+      builder: (context, child) {
+        return temaDatePicker(context, child);
+      },
+    );
 
     String fecha;
     if (picked != null) {
-      setState(() {
-        fechaFormat = picked;
-        fecha = DateFormat('dd/MM/yyyy').format(fechaFormat!).toString();
-        widget.controlador.text = fecha.substring(0, 10);
-      });
+      setState(
+        () {
+          fechaFormat = picked;
+          fecha = DateFormat('dd/MM/yyyy').format(fechaFormat!).toString();
+          widget.controlador.text = fecha.substring(0, 10);
+        },
+      );
     }
   }
 }

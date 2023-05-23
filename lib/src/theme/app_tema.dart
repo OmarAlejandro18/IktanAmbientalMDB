@@ -5,12 +5,14 @@ class AppTheme {
   static const Color secundary = Colors.white;
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
+    useMaterial3: true,
     primaryColor: primary,
     highlightColor: Colors.green,
     appBarTheme: const AppBarTheme(
-      backgroundColor: primary,
-      elevation: 0,
-    ),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        backgroundColor: primary,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white)),
     textSelectionTheme:
         const TextSelectionThemeData(selectionHandleColor: Colors.transparent),
   );

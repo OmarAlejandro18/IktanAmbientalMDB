@@ -7,7 +7,6 @@ import 'package:iktanambiental/src/providers/providers.dart';
 import 'package:iktanambiental/src/screens/screens.dart';
 import 'package:iktanambiental/src/theme/app_tema.dart';
 import 'package:iktanambiental/src/widgets/image_picker.dart';
-import 'package:iktanambiental/src/widgets/reparado_no.dart';
 import 'package:iktanambiental/src/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -79,10 +78,11 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final esReparado = Provider.of<ReparadoProvider>(context);
-    final noRepa = Provider.of<NoReparadoProvider>(context);
-
+    //final noRepa = Provider.of<NoReparadoProvider>(context);
+    final hfuga = Provider.of<FugaProvider>(context);
     final espacioSizedBox = size.width * 0.03;
     final textos = size.width * 0.03;
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Ingresa Los Datos del Anexo 5')),
@@ -231,68 +231,14 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                     controlador: concentracionPrevia,
                     hinText: 'Concentración previa (ppm)'),
                 SizedBox(
-                  height: size.height * 0.040,
+                  height: size.height * 0.015,
                 ),
-                Center(
-                  child: Text(
-                    'Reparación',
-                    style: TextStyle(
-                      fontSize: textos,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: espacioSizedBox,
-                ),
-                CampoPudoSerRapado(
-                    reparado: reparado,
-                    hinText: '¿Pudo Ser Reparado?',
-                    fechaReparacion: fechaReparacion,
-                    horaReparacion: horaReparacion,
-                    fechaComprobacionReparacion: fechaComprobacionReparacion,
-                    horaComprobacionReparacion: horaComprobacionReparacion,
-                    concentracionPosteriorReparacion:
-                        concentracionPosteriorReparacion,
-                    noReparadofaltaComponentes: noReparadofaltaComponentes,
-                    fechaRemisionComponente: fechaRemisionComponente,
-                    fechaReparacionComponente: fechaReparacionComponente,
-                    fechaRemplazoEquipo: fechaRemplazoEquipo,
-                    volumenMetano: volumenMetano),
-
-                SizedBox(
-                  height: espacioSizedBox,
-                ),
-                // APARECER EL OTRO FORMULARIO DE REPARADO
-                (esReparado.getReparado == '')
-                    ? const SizedBox()
-                    : const SizedBox(),
-                (esReparado.getReparado == 'Si')
-                    ? ReparadoSi(
-                        fechaReparacion: fechaReparacion,
-                        horaReparacion: horaReparacion,
-                        fechaComprobacionReparacion:
-                            fechaComprobacionReparacion,
-                        horaComprobacionReparacion: horaComprobacionReparacion,
-                      )
-                    : Container(),
-
                 ConcentracionPosteriorReparacion(
                     concentracionPosteriorReparacion:
                         concentracionPosteriorReparacion,
                     hinText: 'Concentración posterior a la reparación (ppm)'),
                 SizedBox(
-                  height: espacioSizedBox,
-                ),
-                ReparadoNo(
-                  noReparadofaltaComponentes: noReparadofaltaComponentes,
-                  fechaRemisionComponente: fechaRemisionComponente,
-                  fechaReparacionComponente: fechaReparacionComponente,
-                  fechaRemplazoEquipo: fechaRemplazoEquipo,
-                  volumenMetano: volumenMetano,
-                ),
-                SizedBox(
-                  height: size.height * 0.040,
+                  height: espacioSizedBox + 25.0,
                 ),
                 Center(
                   child: Text(
@@ -308,11 +254,50 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                 ),
                 Fuga(
                   fuga: fuga,
-                  observacionPersonal: observacionPersonal,
-                  observacion: observacion,
+                  reparado: reparado,
+                  fechaReparacion: fechaReparacion,
+                  horaReparacion: horaReparacion,
+                  fechaComprobacionReparacion: fechaComprobacionReparacion,
+                  horaComprobacionReparacion: horaComprobacionReparacion,
+                  concentracionPosteriorReparacion:
+                      concentracionPosteriorReparacion,
+                  noReparadofaltaComponentes: noReparadofaltaComponentes,
+                  fechaRemisionComponente: fechaRemisionComponente,
+                  fechaReparacionComponente: fechaReparacionComponente,
+                  fechaRemplazoEquipo: fechaRemplazoEquipo,
+                  volumenMetano: volumenMetano,
                 ),
                 SizedBox(
-                  height: size.height * 0.040,
+                  height: espacioSizedBox,
+                ),
+                Center(
+                  child: Text(
+                    'Observaciones',
+                    style: TextStyle(
+                      fontSize: textos,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: espacioSizedBox,
+                ),
+                CampoObservacion(
+                  controlador: observacionPersonal,
+                  hinText: 'Observación personal',
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                CampoObservacion(
+                  controlador: observacion,
+                  hinText: 'Observación',
+                ),
+                SizedBox(
+                  height: espacioSizedBox,
+                ),
+                SizedBox(
+                  height: espacioSizedBox,
                 ),
                 Center(
                   child: Text(
@@ -339,24 +324,28 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                     width: size.width * 0.85,
                     height: size.height * 0.04,
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppTheme.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
-                        onPressed: () async {
-                          imageF = await cargarFotoFirestore();
-                          if (imageF == null) {
-                            imagen.text = 'null';
-                          } else {
-                            setState(() {
-                              imgUploadF = File(imageF!.path);
-                              imagen.text = imgUploadF.path;
-                            });
-                          }
-                        },
-                        child: const Text('Tomar Fotografía')),
+                      ),
+                      onPressed: () async {
+                        imageF = await cargarFotoFirestore();
+                        if (imageF == null) {
+                          imagen.text = 'null';
+                        } else {
+                          setState(() {
+                            imgUploadF = File(imageF!.path);
+                            imagen.text = imgUploadF.path;
+                          });
+                        }
+                      },
+                      child: const Text(
+                        'Tomar Fotografía',
+                        style: TextStyle(color: AppTheme.secundary),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
@@ -411,7 +400,10 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                             });
                           }
                         },
-                        child: const Text('Tomar Fotografía Infrarroja')),
+                        child: const Text(
+                          'Tomar Fotografía Infrarroja',
+                          style: TextStyle(color: AppTheme.secundary),
+                        )),
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -639,7 +631,8 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                           imagenInfrarroja.text = '';
 
                           esReparado.setReparado = '';
-                          noRepa.setNoReparado = '';
+                          //noRepa.setNoReparado = '';
+                          hfuga.setFuga = '';
 
                           Navigator.pushReplacement(
                             context,
@@ -648,7 +641,10 @@ class _FormularioAnexoScreenState extends State<FormularioAnexoScreen> {
                           );
                         }
                       },
-                      child: const Text('Guardar Datos Anexo V'),
+                      child: const Text(
+                        'Guardar Datos Anexo V',
+                        style: TextStyle(color: AppTheme.secundary),
+                      ),
                     ),
                   ),
                 ),
@@ -789,146 +785,6 @@ class CampoObligatorio extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CampoPudoSerRapado extends StatefulWidget {
-  const CampoPudoSerRapado({
-    super.key,
-    required this.reparado,
-    required this.hinText,
-    required this.fechaReparacion,
-    required this.horaReparacion,
-    required this.fechaComprobacionReparacion,
-    required this.horaComprobacionReparacion,
-    required this.concentracionPosteriorReparacion,
-    required this.noReparadofaltaComponentes,
-    required this.fechaRemisionComponente,
-    required this.fechaReparacionComponente,
-    required this.fechaRemplazoEquipo,
-    required this.volumenMetano,
-  });
-
-  final TextEditingController reparado;
-  final String hinText;
-
-  //REPARADO SI
-  final TextEditingController fechaReparacion;
-  final TextEditingController horaReparacion;
-  final TextEditingController fechaComprobacionReparacion;
-  final TextEditingController horaComprobacionReparacion;
-  final TextEditingController concentracionPosteriorReparacion;
-
-  // REPARADO NO
-  final TextEditingController noReparadofaltaComponentes;
-  final TextEditingController fechaRemisionComponente;
-  final TextEditingController fechaReparacionComponente;
-  final TextEditingController fechaRemplazoEquipo;
-  final TextEditingController volumenMetano;
-
-  @override
-  State<CampoPudoSerRapado> createState() => _CampoPudoSerRapadoState();
-}
-
-class _CampoPudoSerRapadoState extends State<CampoPudoSerRapado> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Container(
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(
-              offset: Offset(4, -4),
-              blurRadius: 6,
-              color: Colors.black26,
-            ),
-          ],
-        ),
-        height: 60,
-        child: TextFormField(
-          controller: widget.reparado,
-          style: const TextStyle(
-            color: Colors.black87,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 5, left: 8, right: 5),
-            hintText: widget.hinText,
-            hintStyle: const TextStyle(color: Colors.black38),
-          ),
-          onTap: () => {
-            FocusScope.of(context).requestFocus(FocusNode()),
-            mostrarAlerta(context),
-          },
-        ),
-      ),
-    );
-  }
-
-  mostrarAlerta(BuildContext context) {
-    final fueReperado = Provider.of<ReparadoProvider>(context, listen: false);
-    final noRepa = Provider.of<NoReparadoProvider>(context, listen: false);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("¿Pudo ser reparado?"),
-          actions: [
-            TextButton(
-              child: const Text("No"),
-              onPressed: () {
-                setState(() {
-                  widget.reparado.text = 'No';
-                  fueReperado.setReparado = widget.reparado.text;
-                  // REPARADO SI
-                  widget.fechaReparacion.text = '';
-                  widget.horaReparacion.text = '';
-                  widget.fechaComprobacionReparacion.text = '';
-                  widget.horaComprobacionReparacion.text = '';
-                  widget.concentracionPosteriorReparacion.text = '';
-                  //REPARADO NO
-                  widget.noReparadofaltaComponentes.text = '';
-                  widget.fechaRemisionComponente.text = '';
-                  widget.fechaReparacionComponente.text = '';
-                  widget.fechaRemplazoEquipo.text = '';
-                  widget.volumenMetano.text = '';
-                  noRepa.setNoReparado = '';
-                });
-
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text("Sí"),
-              onPressed: () {
-                setState(() {
-                  //REPARADO SI
-                  widget.reparado.text = 'Si';
-                  fueReperado.setReparado = widget.reparado.text;
-                  widget.fechaReparacion.text = '';
-                  widget.horaReparacion.text = '';
-                  widget.fechaComprobacionReparacion.text = '';
-                  widget.horaComprobacionReparacion.text = '';
-                  widget.concentracionPosteriorReparacion.text = '';
-                  //REPARADO NO
-                  widget.noReparadofaltaComponentes.text = 'null';
-                  widget.fechaRemisionComponente.text = '';
-                  widget.fechaReparacionComponente.text = '';
-                  widget.fechaRemplazoEquipo.text = '';
-                  widget.volumenMetano.text = '';
-                  noRepa.setNoReparado = '';
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

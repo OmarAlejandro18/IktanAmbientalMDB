@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,6 +52,7 @@ class AlertaInstalacion extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text(hinText),
           actions: [
             TextButton(
@@ -77,27 +77,28 @@ class AlertaInstalacion extends StatelessWidget {
 
   mostrarAlertaIOS(BuildContext context) {
     showCupertinoDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Text('¿$hinText?'),
-            actions: [
-              TextButton(
-                child: const Text("No"),
-                onPressed: () {
-                  valorCampo.text = 'No';
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text("Sí"),
-                onPressed: () {
-                  valorCampo.text = 'Si';
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('¿$hinText?'),
+          actions: [
+            TextButton(
+              child: const Text("No"),
+              onPressed: () {
+                valorCampo.text = 'No';
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("Sí"),
+              onPressed: () {
+                valorCampo.text = 'Si';
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

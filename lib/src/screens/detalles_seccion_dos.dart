@@ -7,6 +7,7 @@ class InspeccionesClienteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Inspecciones por cliente'),
@@ -21,17 +22,16 @@ class InspeccionesClienteScreen extends StatelessWidget {
               itemBuilder: (context, i) {
                 final registro = registros[i];
                 return Padding(
-                  padding: const EdgeInsets.only(top: 10, right: 15, left: 15),
+                  padding: const EdgeInsets.only(
+                      top: 10, right: 15, left: 15, bottom: 20),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
+                          color: Colors.grey.withOpacity(0.6),
+                          offset: const Offset(-1, 2),
                         ),
                       ],
                     ),
@@ -48,8 +48,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            const SizedBox(
-                              height: 7,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             TextoInspeccion(
                                 leyenda: 'Nombre de la Instalación',
@@ -64,8 +64,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                 leyenda: 'Inspección Tecnica de riesgo',
                                 valor: registro['inspeccionTecnicaRiesgo']),
 
-                            const SizedBox(
-                              height: 5,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             const Center(
                               child: Text(
@@ -74,8 +74,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            const SizedBox(
-                              height: 7,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             TextoInspeccion(
                                 leyenda: 'Nombre del personal',
@@ -123,8 +123,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                 valor: registro['reparado']),
 
                             // REPARADO SI
-                            const SizedBox(
-                              height: 5,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             const Center(
                               child: Text(
@@ -133,8 +133,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            const SizedBox(
-                              height: 7,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             TextoInspeccion(
                                 leyenda: 'Fecha de reparación',
@@ -156,8 +156,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                 valor: registro[
                                     'concentracionPosteriorReparacion']),
 
-                            const SizedBox(
-                              height: 5,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             const Center(
                               child: Text(
@@ -166,8 +166,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            const SizedBox(
-                              height: 7,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             TextoInspeccion(
                                 leyenda:
@@ -187,11 +187,11 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                 valor: registro['volumenMetano']),
 
                             TextoInspeccion(
-                                leyenda: 'Subido',
-                                valor: registro['subidoNube'].toString()),
-
-                            const SizedBox(
-                              height: 5,
+                              leyenda: 'Subido',
+                              valor: registro['subidoNube'].toString(),
+                            ),
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             const Center(
                               child: Text(
@@ -200,8 +200,8 @@ class InspeccionesClienteScreen extends StatelessWidget {
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            const SizedBox(
-                              height: 7,
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
                             TextoInspeccion(
                                 leyenda: '¿Fuga?', valor: registro['fuga']),

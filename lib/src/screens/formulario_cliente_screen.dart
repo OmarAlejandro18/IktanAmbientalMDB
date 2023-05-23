@@ -253,8 +253,12 @@ class NuevoClienteForm extends StatelessWidget {
               }
             },
             child: btnN.getTextBoton == 'Si'
-                ? const Text('Guardar Nuevo Cliente')
-                : const Text('Ir a la inspección'),
+                ? const Text(
+                    'Guardar Nuevo Cliente',
+                    style: TextStyle(color: Colors.white),
+                  )
+                : const Text('Ir a la inspección',
+                    style: TextStyle(color: Colors.white)),
           ),
         )
       ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FugaProvider with ChangeNotifier {
-  String fugas = '';
+  String fugas = 'null';
 
   get getFuga {
     return fugas;

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Iktanambiental</string>
+	<string>Iktan Ambiental</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -49,6 +49,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>La aplicación necesita acceso a la cámara para tomar fotos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>La aplicación necesita acceso a la galeria para seleccionar imagenes</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Permite guardar imagenes en la galeria</string>
 	<key>NSAllowsArbitraryLoads</key>
 	<true/>
 </dict>
